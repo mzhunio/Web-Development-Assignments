@@ -22,30 +22,92 @@
       background: rgb(39, 156, 64);
       display: flex;
     }
+
     .nav-item {
       min-width: 100px;
       padding: 5px 10px;
     }
+
     .nav-item-title {
       font-size: large;
     }
+
+    .nav-menu {
+      display: none;
+    }
+
+    .nav-item:hover {
+      display: block;
+      position: relative;
+      background: rgb(39, 196, 64);
+    }
+
+    .nav-item:hover .nav-menu {
+      display: flex;
+    }
+
+    .nav-menu {
+      flex-direction: column;
+      position: absolute;
+      background: rgb(39, 196, 64);
+      width: 100%;
+      margin-left: -10px;
+    }
+
+    .nav-menu-item {
+      padding: 5px 10px;
+      text-decoration: none;
+    }
+
+    .nav-menu-item:hover {
+      background-color: rgb(39, 255, 64);
+    }
+
+
+    /* Utilities */
     .bold {
       font-weight: bold;
     }
-
   </style>
 </head>
+
 <body>
   <nav>
     <div class="nav-item">
       <span class="nav-item-title bold">File</span>
+      <div class="nav-menu">
+        <a href class="nav-menu-item">New</a>
+        <a href class="nav-menu-item">Open</a>
+        <a href class="nav-menu-item">Save</a>
+        <a href class="nav-menu-item">Print</a>
+        <a href class="nav-menu-item">Close</a>
+      </div>
     </div>
-
     <div class="nav-item">
       <span class="nav-item-title">Edit</span>
+      <div class="nav-menu">
+        <a href class="nav-menu-item">Undo</a>
+        <a href class="nav-menu-item">Redo</a>
+        <a href class="nav-menu-item">Cut</a>
+        <a href class="nav-menu-item">Copy</a>
+        <a href class="nav-menu-item">Paste</a>
+        <a href class="nav-menu-item">Delete</a>
+        <a href class="nav-menu-item">Select All</a>
+      </div>
     </div>
     <div class="nav-item">
       <span class="nav-item-title bold">View</span>
+      <div class="nav-menu">
+        <a href class="nav-menu-item">Zoom In</a>
+        <a href class="nav-menu-item">Zoom Out</a>
+        <a href class="nav-menu-item">Actual Size</a>
+        <a href class="nav-menu-item">Fit Page</a>
+        <a href class="nav-menu-item">Fit Width</a>
+        <a href class="nav-menu-item">Fit Height</a>
+        <a href class="nav-menu-item">Rotate Left</a>
+        <a href class="nav-menu-item">Rotate Right</a>
+        <a href class="nav-menu-item">Full Screen</a>
+      </div>
     </div>
   </nav>
 
