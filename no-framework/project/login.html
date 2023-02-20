@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/no-framework/project/style.css">
-    <link rel="stylesheet" href="/no-framework/project/picture.jpeg">
-
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"> -->
     <title>Log In</title>
 </head>
 <body>
@@ -16,9 +15,22 @@
         <form id="login-form">
           <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
           <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+          <a href="configPassword.html">Forgot Password?</a>
+
           <input type="submit" value="Login" id="login-form-submit">
         </form>
-    
+
+        <p>Not a Member Yet? <a href="signup.html">Sign Up Now!</a></p>
     </div>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+            <strong>M&M Fitness</strong> by <a href="https://jgthms.com">Michelle Zhunio</a>. The source code is licensed
+            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+            is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+          </p>
+        </div>
+      </footer>
 </body>
 </html>

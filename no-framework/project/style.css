@@ -1,4 +1,4 @@
-html {
+  html {
     height: 100%;
   }
 
@@ -26,12 +26,11 @@ html {
     background-image: url("/no-framework/project/picture.jpeg"); 
     background-position: center center; 
     background-size: 100% 100%;
-
-    /* opacity: .5; */
   }
 
-  h1{
+  h1 {
     color: rgb(250, 247, 247);
+    opacity: .7;
   }
   
   #login-form {
@@ -64,4 +63,17 @@ html {
     background-color: #3a3a3a;
     cursor: pointer;
     outline: none;
+  }
+
+  a {
+    flex-basis: 0;
+    color: rgba(130, 146, 216, 0.846);
+    font-size: 0.800rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  p {
+    color: rgb(250, 247, 247);
+    opacity: .7;
   }
