@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router';
 </script>
 
 <template>
-    <nav class="navbar is-primary">
+    <nav class="navbar is-primary has-background-black-bis">
         <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="https://bulma.io">
@@ -85,7 +85,6 @@ import { RouterLink } from 'vue-router';
     </div>
       </nav>
 </template>
-
 
 <style scoped>
 </style>
