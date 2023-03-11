@@ -62,7 +62,7 @@
               <div class="field">
                 <div class="control">
                   <label class="checkbox">
-                    Need to login? Click <a href="">here</a>
+                    Need to login? Click <a href="./login">here</a>
                   </label>
                 </div>
               </div>

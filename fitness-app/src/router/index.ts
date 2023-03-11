@@ -1,5 +1,8 @@
-import Login from '@/components/Login.vue'
 import Home from '@/components/Home.vue'
+import Search from '@/components/Search.vue'
+import FriendsActivity from '@/components/FriendsActivity.vue'
+import MyActivity from '@/components/MyActivity.vue'
+import Login from '@/components/Login.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import Register from '@/components/Register.vue'
 
@@ -12,6 +15,11 @@ const router = createRouter({
       component: Home
     },
     {
+      path: '/myActivity',
+      name: 'myActivity',
+      component: MyActivity
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login
@@ -20,6 +28,16 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/friendsActivity',
+      name: 'friendsActivity',
+      component: FriendsActivity
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: Search
     },
     {
       path: '/about',

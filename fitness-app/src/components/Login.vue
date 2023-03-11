@@ -79,7 +79,7 @@ function goToLoginPage() {
                 <div class="control">
                   <label class="checkbox">
                     Need to register? Create an account
-                    <a href="./register.html">here</a>
+                    <a href="./register">here</a>
                   </label>
                 </div>
               </div>

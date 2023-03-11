@@ -3,8 +3,7 @@
 </script>
 
 <template>
-    Home Page
-    Tables of how many hours I workout
+    My Activity
   
 </template>
 
