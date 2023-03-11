@@ -1,3 +1,4 @@
+import User from '@/components/User.vue'
 import Home from '@/components/Home.vue'
 import Search from '@/components/Search.vue'
 import FriendsActivity from '@/components/FriendsActivity.vue'
@@ -20,16 +21,6 @@ const router = createRouter({
       component: MyActivity
     },
     {
-      path: '/login',
-      name: 'login',
-      component: Login
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: Register
-    },
-    {
       path: '/friendsActivity',
       name: 'friendsActivity',
       component: FriendsActivity
@@ -46,6 +37,21 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../components/About.vue')
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: User
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     }
   ]
 })

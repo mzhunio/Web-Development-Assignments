@@ -12,7 +12,7 @@ const isUserLoggedIn = username && password;
   <nav class="navbar is-primary">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item" href="./home">
+        <a class="navbar-item" href="./">
           <img
             alt="Vue logo"
             class="logo"
@@ -34,23 +34,30 @@ const isUserLoggedIn = username && password;
 
       <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
         <div class="navbar-start">
-          <router-link to="/myActivity" class="navbar-item">
-            <i class="fas fa-running"></i>
-            My Activity
+          <router-link to ="/myActivity" class="navbar-item">
+            <span class="icon">
+              <i class="fas fa-running"></i>
+            </span>
+            <span>My Activity</span>
           </router-link>
+          
 
           <router-link to="/friendsActivity" class="navbar-item">
-            <i class="fas fa-chart-line"></i>
-            Friends Activity
+            <span class="icon">
+              <i class="fas fa-people-group"></i>
+            </span>
+            <span>Friends Activity</span> 
           </router-link>
 
           <router-link to="/search" class="navbar-item">
-            <i class="fas fa-running"></i>
-            Search
+            <span class="icon">
+            <i class="fas fa-search"></i>
+          </span>
+          <span>Search</span>
           </router-link>
 
           <router-link to="/about" class="navbar-item">
-            <i class="fas fa-people-group"></i>
+            <i class="fas fa-about"></i>
             About
           </router-link>
 
@@ -60,17 +67,11 @@ const isUserLoggedIn = username && password;
           <RouterLink to="/about" class="navbar-item">About</RouterLink> -->
 
           <div class="navbar-item has-dropdown is-hoverable">
-            <a
-              class="navbar-link"
-              href="https://bulma.io/documentation/overview/start/"
-            >
+            <a class="navbar-link">
               Admin
             </a>
             <div class="navbar-dropdown">
-              <a
-                class="navbar-item"
-                href="https://bulma.io/documentation/overview/start/"
-              >
+              <a class="navbar-item" href="./user">
                 Users
               </a>
             </div>
