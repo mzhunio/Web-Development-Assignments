@@ -17,18 +17,19 @@ function login() {
   localStorage.setItem("username", username);
   localStorage.setItem("password", password);
 
-  router.push("/home");
+  loginApi(username);
 }
 
 function loginApi(username: string) {
   console.log("Logging in...");
 
   setTimeout(() => {
-    console.log("Loggedin successfully");
+    console.log("Logging successfully");
     authState.username.value = username;
-    router.push("/login");
+    router.push('/');
   }, 3000);
 }
+
 </script>
 
 <template>
