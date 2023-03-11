@@ -92,7 +92,7 @@ function logOutApi() {
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <span v-if="isUserLoggedIn">{{ authState.username }}</span>
+              <button v-if="isUserLoggedIn" class="button">Welcome {{ authState.username }}</button>
               <button v-if="isUserLoggedIn" class="button" @click="onLogout()">
                 Log out
               </button>
