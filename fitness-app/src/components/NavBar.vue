@@ -12,7 +12,7 @@ const isUserLoggedIn = username && password;
   <nav class="navbar is-primary">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <a class="navbar-item">
           <img
             alt="Vue logo"
             class="logo"
