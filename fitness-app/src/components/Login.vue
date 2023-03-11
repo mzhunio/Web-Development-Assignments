@@ -22,6 +22,7 @@ function login() {
 function goToLoginPage() {
   router.push("/home");
 }
+
 </script>
 
 <template>
