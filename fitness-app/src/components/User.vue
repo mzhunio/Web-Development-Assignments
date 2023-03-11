@@ -3,8 +3,9 @@
 </script>
 
 <template>
-   User
-  
+    <div class="container">
+        <h1 class="title">Users</h1>
+    </div>
 </template>
 
 <style scoped>

@@ -3,8 +3,9 @@
 </script>
 
 <template>
-   Search
-  
+    <div class="container">
+        <h1>Search</h1>
+    </div>
 </template>
 
 <style scoped>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import router from "@/router";
+import { authState } from "@/state/auth.state";
 
 let username = "";
 let password = "";
@@ -16,13 +17,18 @@ function login() {
   localStorage.setItem("username", username);
   localStorage.setItem("password", password);
 
-  goToLoginPage();
-}
-
-function goToLoginPage() {
   router.push("/home");
 }
 
+function loginApi(username: string) {
+  console.log("Logging in...");
+
+  setTimeout(() => {
+    console.log("Loggedin successfully");
+    authState.username.value = username;
+    router.push("/login");
+  }, 3000);
+}
 </script>
 
 <template>
@@ -30,7 +36,8 @@ function goToLoginPage() {
     <div class="container is-fluid">
       <div class="columns is-justify-content-center">
         <div
-          class="column is-half-tablet is-one-third-desktop is-one-quarter-widescreen">
+          class="column is-half-tablet is-one-third-desktop is-one-quarter-widescreen"
+        >
           <div class="card">
             <div class="card-content">
               <div class="title mt-2 has-text-centered">Sign In</div>

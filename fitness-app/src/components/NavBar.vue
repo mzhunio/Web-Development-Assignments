@@ -1,11 +1,27 @@
 <script setup lang="ts">
+import router from "@/router";
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
+import { authState } from "../state/auth.state";
+
 const isMenuActive = false;
+const isUserLoggedIn = computed(() => !!authState.username.value);
 
-const username = localStorage.getItem("username");
-const password = localStorage.getItem("password");
+function onLogout(): void {
+  logOutApi();
+}
 
-const isUserLoggedIn = username && password;
+function logOutApi() {
+  console.log("Logging out...");
+
+  setTimeout(() => {
+    console.log("Logged out successfully");
+    authState.username.value = "";
+    router.push("/login");
+  }, 3000);
+}
+
+
 </script>
 
 <template>
@@ -34,26 +50,25 @@ const isUserLoggedIn = username && password;
 
       <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
         <div class="navbar-start">
-          <router-link to ="/myActivity" class="navbar-item">
+          <router-link to="/myActivity" class="navbar-item">
             <span class="icon">
               <i class="fas fa-running"></i>
             </span>
             <span>My Activity</span>
           </router-link>
-          
 
           <router-link to="/friendsActivity" class="navbar-item">
             <span class="icon">
               <i class="fas fa-people-group"></i>
             </span>
-            <span>Friends Activity</span> 
+            <span>Friends Activity</span>
           </router-link>
 
           <router-link to="/search" class="navbar-item">
             <span class="icon">
-            <i class="fas fa-search"></i>
-          </span>
-          <span>Search</span>
+              <i class="fas fa-search"></i>
+            </span>
+            <span>Search</span>
           </router-link>
 
           <router-link to="/about" class="navbar-item">
@@ -67,13 +82,9 @@ const isUserLoggedIn = username && password;
           <RouterLink to="/about" class="navbar-item">About</RouterLink> -->
 
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              Admin
-            </a>
+            <a class="navbar-link"> Admin </a>
             <div class="navbar-dropdown">
-              <a class="navbar-item" href="./user">
-                Users
-              </a>
+              <a class="navbar-item" href="./user"> Users </a>
             </div>
           </div>
         </div>
@@ -81,6 +92,10 @@ const isUserLoggedIn = username && password;
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
+              <span v-if="isUserLoggedIn">{{ authState.username }}</span>
+              <button v-if="isUserLoggedIn" class="button" @click="onLogout()">
+                Log out
+              </button>
               <router-link
                 v-if="!isUserLoggedIn"
                 class="button is-primary"
