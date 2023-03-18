@@ -60,10 +60,11 @@ function onSaveChangesClicked() {
           <!-- Create Workout Modal -->
           <div class="modal" :class="{ 'is-active': shouldShowModal }">
             <div class="modal-background" @click="closeModal"></div>
-
             <div class="modal-content">
               <div class="card">
                 <div class="card-content">
+                
+                 
                   <p class="title">Create Workout</p>
 
                   <div class="field">
@@ -149,6 +150,7 @@ function onSaveChangesClicked() {
               aria-label="close"
               @click="closeModal"
             ></button>
+   
           </div>
 
           <!-- list of workouts -->
@@ -167,48 +169,68 @@ function onSaveChangesClicked() {
                 <div class="content">
                   <p>
                     <strong>Michelle Zhunio</strong> <small> {{ session }}</small>
+                    
                     <small>31m</small>
                     <br />
-                    <div v-for="workout in workouts">
 
-                  
-                      <div> 
-                      Workout Name = {{ workout.workoutName }}, Repetitions =
-                      {{ workout.repetitions }}, Sets = {{ workout.sets }}
+                    <div>
+                      <div>
+                        <p> {{ workout.workoutName }}</p>
                       </div>
-                    </div>
-                  </p>
-                </div>
-                <nav class="level is-mobile">
-                  <div class="level-left">
-                    <a class="level-item" aria-label="reply">
-                      <span class="icon is-small">
-                        <i class="fas fa-reply" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                    <a class="level-item" aria-label="retweet">
-                      <span class="icon is-small">
-                        <i class="fas fa-retweet" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                    <a class="level-item" aria-label="like">
-                      <span class="icon is-small">
-                        <i class="fas fa-heart" aria-hidden="true"></i>
-                      </span>
-                    </a>
+                        <nav class="level is-mobile">
+                          <div class="level-item has-text-centered">
+                            <div>
+                              <p class="title">{{ workout.sets }}</p>
+                              <p class="heading">Sets</p>
+                            </div>
+                          </div>
+                        
+                          <div class="level-item has-text-centered">
+                            <div>
+                              <p class="title"> {{ workout.repetitions }}</p>
+                              <p class="heading">Repetitions</p>
+                            </div>
+                          </div>
+                        </nav>
+                      </div>
+                    </p>
                   </div>
-                </nav>
+
+
+                        <nav class="level is-mobile">
+                          <div class="level-left">
+                            <a class="level-item" aria-label="reply">
+                              <span class="icon is-small">
+                                <i class="fas fa-reply" aria-hidden="true"></i>
+                              </span>
+                            </a>
+                            <a class="level-item" aria-label="retweet">
+                              <span class="icon is-small">
+                                <i class="fas fa-retweet" aria-hidden="true"></i>
+                              </span>
+                            </a>
+                            <a class="level-item" aria-label="like">
+                              <span class="icon is-small">
+                                <i class="fas fa-heart" aria-hidden="true"></i>
+                              </span>
+                            </a>
+                          </div>
+                        </nav>
+              </div>
+              <div class="media-right">
+                <button class="delete"></button>
               </div>
             </article>
           </div>
 
 
-          <div v-for="workout in workouts">
+          <!-- <div v-for="workout in workouts">
             <div>
               Workout Name = {{ workout.workoutName }}, Repetitions =
               {{ workout.repetitions }}, Sets = {{ workout.sets }}
             </div>
-          </div>
+          </div> -->
+          
         </div>
       </div>
     </div>
