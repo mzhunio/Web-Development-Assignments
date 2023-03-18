@@ -1,4 +1,4 @@
-import AddWorkout from '@/components/AddWorkout.vue'
+
 import User from '@/components/User.vue'
 import Home from '@/components/Home.vue'
 import Search from '@/components/Search.vue'
@@ -7,6 +7,7 @@ import MyActivity from '@/components/MyActivity.vue'
 import Login from '@/components/Login.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import Register from '@/components/Register.vue'
+import Modal from '@/components/Modal.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,9 +56,9 @@ const router = createRouter({
       component: Register
     },
     {
-      path: '/addWorkout',
-      name: 'addWorkout',
-      component: AddWorkout
+      path: '/modal',
+      name: 'modal',
+      component: Modal
     }
 
   ]
