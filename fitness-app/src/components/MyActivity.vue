@@ -62,7 +62,7 @@ function onDeleteExercise(exerciseIndex: number) {
     <div class="container">
       <div class="columns is-justify-content-center mt-3">
         <div
-          class="column is-half-tablet is-three-quarters"
+          class="column is-half-tablet is-two-thirds"
         >
           <button
             type="button"
