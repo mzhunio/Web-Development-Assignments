@@ -1,3 +1,4 @@
+import AddWorkout from '@/components/AddWorkout.vue'
 import User from '@/components/User.vue'
 import Home from '@/components/Home.vue'
 import Search from '@/components/Search.vue'
@@ -52,7 +53,13 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/addWorkout',
+      name: 'addWorkout',
+      component: AddWorkout
     }
+
   ]
 })
 
