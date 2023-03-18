@@ -62,7 +62,7 @@ function onDeleteExercise(exerciseIndex: number) {
     <div class="container">
       <div class="columns is-justify-content-center mt-3">
         <div
-          class="column is-half-tablet is-one-third-desktop is-one-quarter-widescreen"
+          class="column is-half-tablet is-three-quarters"
         >
           <button
             type="button"
@@ -320,4 +320,7 @@ function onDeleteExercise(exerciseIndex: number) {
 .button {
   width: 100%;
 }
+
+
+
 </style>
