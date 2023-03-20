@@ -20,8 +20,6 @@ function logOutApi() {
     router.push("/login");
   }, 3000);
 }
-
-
 </script>
 
 <template>
@@ -29,13 +27,7 @@ function logOutApi() {
     <div class="container">
       <div class="navbar-brand">
         <a class="navbar-item" href="./">
-          <img
-            alt="Vue logo"
-            class="logo"
-            src="@/assets/logo.svg"
-            width="22"
-            height="22"
-          />
+          <i class="fa-solid fa-fire 2em"></i>
         </a>
         <div
           class="navbar-burger"
@@ -92,7 +84,9 @@ function logOutApi() {
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <button v-if="isUserLoggedIn" class="button">Welcome {{ authState.username }}</button>
+              <button v-if="isUserLoggedIn" class="button">
+                Welcome {{ authState.username }}
+              </button>
               <button v-if="isUserLoggedIn" class="button" @click="onLogout()">
                 Log out
               </button>

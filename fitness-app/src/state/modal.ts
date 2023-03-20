@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 export const shouldShowModal = ref(false);
 
-interface Workout {
+export interface Workout {
   workoutName: string;
   duration: number;
   exercises: Exercise[];

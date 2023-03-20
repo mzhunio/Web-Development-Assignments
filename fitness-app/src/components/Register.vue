@@ -3,6 +3,7 @@ import router from "@/router";
 import { reactive } from "vue";
 import { authState } from "../state/auth.state";
 
+
 const registerState = reactive({
   username: "lucy",
   password: "12345",

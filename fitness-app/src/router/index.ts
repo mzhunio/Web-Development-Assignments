@@ -3,6 +3,7 @@ import User from '@/components/User.vue'
 import Home from '@/components/Home.vue'
 import Search from '@/components/Search.vue'
 import FriendsActivity from '@/components/FriendsActivity.vue'
+import FriendsActivityWorkout from '@/components/FriendsActivityWorkout.vue'
 import MyActivity from '@/components/MyActivity.vue'
 import Login from '@/components/Login.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/friendsActivity',
       name: 'friendsActivity',
       component: FriendsActivity
+    },
+    {
+      path: '/friendsActivity/workout/:username',
+      name: 'Friends ACtivity Workout',
+      component: FriendsActivityWorkout
     },
     {
       path: '/search',

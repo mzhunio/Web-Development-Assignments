@@ -1,6 +1,16 @@
 <script setup lang="ts">
-import { workouts, authState } from "@/state/auth.state";
+import { workouts, authState, workoutsMap } from "@/state/auth.state";
 import { onDeleteWorkout } from "@/state/modal";
+import router from "@/router";
+
+const username = router.currentRoute.value.params.username as keyof typeof workoutsMap;
+const userWorkout = workoutsMap[username];
+
+if (userWorkout) {
+  workouts.value = userWorkout;
+} else {
+  console.error("Sorry, I could not found provided user.");
+}
 </script>
 
 <template>
@@ -68,7 +78,6 @@ import { onDeleteWorkout } from "@/state/modal";
 </template>
 
 <style scoped>
-
 .exercise-title,
 .exercise {
   display: grid;
@@ -79,5 +88,4 @@ import { onDeleteWorkout } from "@/state/modal";
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr;
 }
-
 </style>

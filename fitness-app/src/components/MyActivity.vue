@@ -2,6 +2,7 @@
 import ListWorkouts from "./ListWorkouts.vue";
 import Modal from "./Modal.vue";
 import { onAddWorkoutClicked } from "@/state/modal";
+
 </script>
 
 <template>
