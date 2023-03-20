@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { workouts, authState, workoutsMap } from "@/state/auth.state";
+import { friendsWorkouts, authState, workoutsMap } from "@/state/auth.state";
 import { onDeleteWorkout } from "@/state/modal";
 import router from "@/router";
 
@@ -7,7 +7,7 @@ const username = router.currentRoute.value.params.username as keyof typeof worko
 const userWorkout = workoutsMap[username];
 
 if (userWorkout) {
-  workouts.value = userWorkout;
+  friendsWorkouts.value = userWorkout;
 } else {
   console.error("Sorry, I could not found provided user.");
 }
@@ -16,7 +16,7 @@ if (userWorkout) {
 <template>
   <!-- list of workouts -->
   <div class="box mt-5">
-    <article class="media" v-for="(workout, workoutIndex) in workouts">
+    <article class="media" v-for="(workout, workoutIndex) in friendsWorkouts">
       <div class="media-left">
         <figure class="image is-64x64">
           <img

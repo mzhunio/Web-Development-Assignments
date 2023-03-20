@@ -7,7 +7,7 @@ export const authState = {
   username,
 };
 
- const michelleWorkouts = [
+const michelleWorkouts = [
   {
     workoutName: "MichelleLeg Workout",
     duration: 30,
@@ -38,7 +38,7 @@ export const authState = {
   },
 ];
 
- const richardWorkouts = [
+const richardWorkouts = [
   {
     workoutName: "RichardArms Workouts",
     duration: 30,
@@ -69,7 +69,7 @@ export const authState = {
   },
 ];
 
- const karoWorkouts = [
+const karoWorkouts = [
   {
     workoutName: "KaroArms Workouts",
     duration: 30,
@@ -104,6 +104,8 @@ export const workoutsMap = {
   mzhunio: michelleWorkouts,
   rzhunio: richardWorkouts,
   kzhunio: karoWorkouts,
-}
+};
 
-export const workouts = ref<Workout[]>(richardWorkouts);
+export const friendsWorkouts = ref<Workout[]>(michelleWorkouts);
+
+export const workouts = ref<Workout[]>(michelleWorkouts);
