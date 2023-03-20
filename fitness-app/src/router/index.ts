@@ -63,14 +63,6 @@ const router = createRouter({
       component: Register,
     },
     {
-<<<<<<< HEAD
-      path: '/modal',
-      name: 'modal',
-      component: Modal
-    }
-  ]
-})
-=======
       path: "/modal",
       name: "modal",
       component: Modal,
@@ -82,6 +74,5 @@ const router = createRouter({
     },
   ],
 });
->>>>>>> main
 
 export default router
