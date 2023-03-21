@@ -1,4 +1,4 @@
-
+import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
 import Activity from "@/components/Activity.vue";
 import FriendsActivity from "@/components/FriendsActivity.vue";
 import FriendsActivityWorkout from "@/components/FriendsActivityWorkout.vue";
@@ -76,3 +76,13 @@ const router = createRouter({
 });
 
 export default router
+
+
+// function secureRoute (to : RouteLocationNormalized, from : RouteLocationNormalized, next : NavigationGuardNext ) {
+//   const session = useSession();
+//   if (session.user) {
+//       next()
+//   } else { 
+//       next('/login')
+//   }
+// }

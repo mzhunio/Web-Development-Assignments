@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import router from "@/router";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { authState } from "../state/auth.state";
 
-const isMenuActive = false;
+const isMenuActive = ref(false);
 const isUserLoggedIn = computed(() => !!authState.username.value);
 
 
