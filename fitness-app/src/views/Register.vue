@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import router from "@/router";
 import { reactive } from "vue";
-import { authState } from "../state/auth.state";
+import { authState } from "../state/user";
 
 
 const registerState = reactive({

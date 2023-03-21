@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import router from "@/router";
-import { authState } from "@/state/auth.state";
+import { authState } from "@/state/user";
 
 let username = "";
 let password = "";

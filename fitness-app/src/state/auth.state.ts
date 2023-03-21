@@ -1,9 +1,9 @@
-import { ref } from "vue";
-// import type { Workout } from "./modal";
+// import { ref } from "vue";
 
-const username = ref("");
 
-export const authState = {
-  username,
-};
+// const username = ref("");
+
+// export const authState = {
+//   username,
+// };
 

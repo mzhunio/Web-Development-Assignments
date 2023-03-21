@@ -2,7 +2,7 @@
 import router from "@/router";
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
-import { authState } from "../state/auth.state";
+import { authState } from "../state/user";
 
 const isMenuActive = ref(false);
 const isUserLoggedIn = computed(() => !!authState.username.value);

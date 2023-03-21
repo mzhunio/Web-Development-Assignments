@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { authState } from "@/state/auth.state";
+import { authState } from "@/state/user";
 import { onDeleteWorkout } from "@/state/modal";
 import { friendsWorkouts, workoutsMap } from "@/state/workout";
 import router from "@/router";

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { computed } from "vue"
-import { authState } from "../state/auth.state";
+import { authState } from "../state/user";
 
 interface User {
   id: number;

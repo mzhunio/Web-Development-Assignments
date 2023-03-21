@@ -1,6 +1,10 @@
 import { ref } from "vue";
 
+const username = ref("");
 
+export const authState = {
+  username,
+};
 interface User {
     id: number;
     username: string;
