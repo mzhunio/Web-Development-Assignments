@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { workouts, authState } from "@/state/auth.state";
+import { authState } from "@/state/auth.state";
 import { onDeleteWorkout } from "@/state/modal";
+import { workouts } from "@/state/workout";
 </script>
 
 <template>

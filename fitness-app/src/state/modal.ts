@@ -1,31 +1,7 @@
-import { workouts } from "@/state/auth.state";
+import { workouts, workout, newExercise } from "@/state/workout";
 import { ref } from "vue";
 
 export const shouldShowModal = ref(false);
-
-export interface Workout {
-  workoutName: string;
-  duration: number;
-  exercises: Exercise[];
-}
-
-interface Exercise {
-  exerciseName: string;
-  sets: number;
-  repetitions: number;
-}
-
-export const workout = ref<Workout>({
-  workoutName: "Leg Workout",
-  duration: 30,
-  exercises: [],
-});
-
-export const newExercise = ref<Exercise>({
-  exerciseName: "Arm",
-  sets: 4,
-  repetitions: 15,
-});
 
 export function onAddWorkoutClicked() {
   showModal();

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { friendsWorkouts, authState, workoutsMap } from "@/state/auth.state";
+import { authState } from "@/state/auth.state";
 import { onDeleteWorkout } from "@/state/modal";
+import { friendsWorkouts, workoutsMap } from "@/state/workout";
 import router from "@/router";
 
 const username = router.currentRoute.value.params

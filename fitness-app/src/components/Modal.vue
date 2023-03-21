@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import {
   shouldShowModal,
-  workout,
-  newExercise,
   onAddExercise,
   closeModal,
   onSaveChangesClicked,
   onDeleteExercise,
 } from "@/state/modal";
+
+import { workout, newExercise } from "@/state/workout";
+
+
 </script>
 
 <template>
