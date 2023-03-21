@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import router from "@/router";
+import { computed } from "vue"
+import { authState } from "../state/auth.state";
 
 interface User {
   id: number;
@@ -16,56 +17,15 @@ const user = ref<User>({
   isAdmin: true,
 });
 
-// const usersInformation = [
-//   { id: 0, username: "mzhunio", email: "mzhunio@a.com", isAdmin: true },
-//   { id: 1, username: "rzhunio", email: "rzhunio@a.com", isAdmin: false },
-//   { id: 3, username: "kzhunio", email: "kzhunio@a.com", isAdmin: false },
-// ];
+const users = ref([
+  { id: 0, username: "mzhunio", email: "mzhunio@a.com", isAdmin: true },
+  { id: 1, username: "rzhunio", email: "rzhunio@a.com", isAdmin: false },
+  { id: 2, username: "kzhunio", email: "kzhunio@a.com", isAdmin: false },
+]);
 
-const mzhunioUser = [
-  {
-    id: 0,
-    username: "mzhunio",
-    email: "mzhunio@a.com",
-    isAdmin: true,
-  },
-];
+const isUserLoggedIn = computed(() => !!authState.username.value);
 
-const rzhunioUser = [
-  {
-    id: 1,
-    username: "rzhunio",
-    email: "rzhunio@a.com",
-    isAdmin: false,
-  },
-];
 
-const kzhunioUser = [
-  {
-    id: 2,
-    username: "kzhunio",
-    email: "kzhunio@a.com",
-    isAdmin: false,
-  },
-];
-
-const usersMap = {
-  mzhunio: mzhunioUser,
-  rzhunio: rzhunioUser,
-  kzhunio: kzhunioUser,
-};
-
-const usernames = ref<User[]>(mzhunioUser);
-
-const username = router.currentRoute.value.params
-  .username as keyof typeof usersMap;
-const usersInfo = usersMap[username];
-
-if (usersInfo) {
-  usernames.value = usersInfo;
-} else {
-  console.error("Sorry, I could not found provided user.");
-}
 </script>
 
 <template>
@@ -76,9 +36,9 @@ if (usersInfo) {
           Add User
         </button>
       </div>
-      <div class="column is-three-fifths">
+      <div class="column">
         <div class="box">
-          <table class="table" v-for="username in usernames">
+          <table class="table">
             <thead>
               <tr>
                 <th><abbr title="id">Id</abbr></th>
@@ -89,19 +49,19 @@ if (usersInfo) {
               </tr>
             </thead>
             <tfoot></tfoot>
-            <tbody>
+            <tbody  v-for="user in users">
               <tr>
                 <th>
-                  <abbr title="id">{{ username.id }}</abbr>
+                  <abbr title="id">{{ user.id }}</abbr>
                 </th>
                 <th>
-                  <abbr title="username">{{ username.username }}</abbr>
+                  <abbr title="username">{{ user.username }}</abbr>
                 </th>
                 <th>
-                  <abbr title="email">{{ username.email }}</abbr>
+                  <abbr title="email">{{ user.email }}</abbr>
                 </th>
                 <th>
-                  <abbr title="isAdmin">{{ username.isAdmin }}</abbr>
+                  <abbr title="isAdmin">{{ user.isAdmin }}</abbr>
                 </th>
                 <th>
                   <abbr title="Played">
@@ -123,9 +83,8 @@ if (usersInfo) {
 </template>
 
 <style scoped>
-.container {
-  margin-left: auto;
-  margin-right: auto;
+.user {
+  display: grid;
   align-items: center;
 }
 .buttons {

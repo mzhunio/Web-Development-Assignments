@@ -7,6 +7,7 @@ import { authState } from "../state/auth.state";
 const isMenuActive = false;
 const isUserLoggedIn = computed(() => !!authState.username.value);
 
+
 function onLogout(): void {
   logOutApi();
 }
@@ -20,6 +21,7 @@ function logOutApi() {
     router.push("/login");
   }, 3000);
 }
+
 </script>
 
 <template>
