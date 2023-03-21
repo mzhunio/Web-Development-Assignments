@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ListWorkouts from "./ListWorkouts.vue";
-import Modal from "./Modal.vue";
+import ListWorkouts from "../components/ListWorkouts.vue";
+import Modal from "../components/Modal.vue";
 import { onAddWorkoutClicked } from "@/state/modal";
 
 

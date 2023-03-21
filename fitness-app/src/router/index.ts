@@ -1,14 +1,13 @@
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
-import Activity from "@/components/Activity.vue";
-import FriendsActivity from "@/components/FriendsActivity.vue";
+import FriendsActivity from "@/views/FriendsActivity.vue";
 import FriendsActivityWorkout from "@/components/FriendsActivityWorkout.vue";
-import Home from "@/components/Home.vue";
-import Login from "@/components/Login.vue";
+import Home from "@/views/Home.vue";
+import Login from "@/views/Login.vue";
 import Modal from "@/components/Modal.vue";
-import MyActivity from "@/components/MyActivity.vue";
-import Register from "@/components/Register.vue";
-import Search from "@/components/Search.vue";
-import User from "@/components/User.vue";
+import MyActivity from "@/views/MyActivity.vue";
+import Register from "@/views/Register.vue";
+import Search from "@/views/Search.vue";
+import User from "@/views/User.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -45,7 +44,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import("../components/About.vue"),
+      component: () => import("../views/About.vue"),
     },
     {
       path: "/user",
@@ -66,11 +65,6 @@ const router = createRouter({
       path: "/modal",
       name: "modal",
       component: Modal,
-    },
-    {
-      path: "/activity",
-      name: "Activity",
-      component: Activity,
     },
   ],
 });
