@@ -115,30 +115,6 @@ import {
             </nav>
           </div>
 
-          <!-- TODO: Add 'Workout Type' dropdown -->
-
-          <!-- <div class="field" v-if="workoutType === 'weights'">
-                    <label class="label">Weight</label>
-                    <div class="control">
-                      <input
-                        class="input"
-                        type="text"
-                        placeholder="Text input"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="field" v-if="workoutType === 'outdoors'">
-                    <label class="label">Outdoors</label>
-                    <div class="control">
-                      <input
-                        class="input"
-                        type="text"
-                        placeholder="Text input"
-                      />
-                    </div>
-                  </div> -->
-
           <div class="mt-1 columns">
             <div class="column">
               <button

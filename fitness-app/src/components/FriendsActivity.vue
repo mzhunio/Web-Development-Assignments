@@ -13,8 +13,8 @@ function goToWorkout(username: string) {
 </script>
 
 <template>
-  <div class="columns is-centered mt-5">
-    <div class="column is-half">
+  <div class="columns is-justify-content-center mt-5">
+    <div class="column is-half-tablet is-one-quarter">
       <div v-for="friend in friends">
         <div class="box">
           <article class="media">
@@ -32,7 +32,7 @@ function goToWorkout(username: string) {
                 <p>
                   <strong>{{ friend.username }}</strong><small></small>
                   <small>31m</small> 
-                  <button class="button"> <small @click="goToWorkout(friend.username)">See Workouts</small></button>
+                  <button class="button is-link is-light ml-6"><small @click="goToWorkout(friend.username)">See Workouts</small></button>
                 </p>
               </div>
               <nav class="level is-mobile">
