@@ -66,7 +66,7 @@ const richardWorkouts = [
     ],
   },
   {
-    workoutName: "Arms Workout",
+    workoutName: "Leg Workout",
     duration: 40,
     exercises: [
       { exerciseName: "Squats", sets: 4, repetitions: 15 },
@@ -97,7 +97,7 @@ const karoWorkouts = [
     ],
   },
   {
-    workoutName: "Arms Workout",
+    workoutName: "Leg Workout",
     duration: 50,
     exercises: [
       { exerciseName: "Squats", sets: 4, repetitions: 15 },
