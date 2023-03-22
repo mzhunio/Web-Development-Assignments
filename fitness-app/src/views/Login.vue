@@ -23,13 +23,16 @@ function login() {
 function loginApi(username: string) {
   console.log("Logging in...");
 
-  setTimeout(() => {
-    console.log("Logging successfully");
-    authState.username.value = username;
-    router.push('/');
-  }, 3000);
-}
+  console.log("Logging successfully");
+  authState.username.value = username;
+  router.push("/");
 
+  // setTimeout(() => {
+  //   console.log("Logging successfully");
+  //   authState.username.value = username;
+  //   router.push('/');
+  // }, 3000);
+}
 </script>
 
 <template>
@@ -77,7 +80,8 @@ function loginApi(username: string) {
                 <div class="control is-flex">
                   <button
                     class="button is-warning is-flex-grow-1"
-                    @click="login">
+                    @click="login"
+                  >
                     Sign in
                   </button>
                 </div>

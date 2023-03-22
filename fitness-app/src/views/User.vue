@@ -1,31 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { computed } from "vue"
-import { authState } from "../state/user";
+import { computed, ref } from "vue";
+import { authState, users } from "../state/user";
 
-interface User {
-  id: number;
-  username: string;
-  email: string;
-  isAdmin: boolean;
-}
-
-const user = ref<User>({
-  id: 0,
-  username: "mzhunio",
-  email: "mzhunio@a.com",
-  isAdmin: true,
-});
-
-  const users = ref([
-  { id: 0, username: "mzhunio", email: "mzhunio@a.com", isAdmin: true },
-  { id: 1, username: "rzhunio", email: "rzhunio@a.com", isAdmin: false },
-  { id: 2, username: "kzhunio", email: "kzhunio@a.com", isAdmin: false },
-]);
 
 const isUserLoggedIn = computed(() => !!authState.username.value);
-
-
 </script>
 
 <template>
@@ -49,7 +27,7 @@ const isUserLoggedIn = computed(() => !!authState.username.value);
               </tr>
             </thead>
             <tfoot></tfoot>
-            <tbody  v-for="user in users">
+            <tbody v-for="user in users">
               <tr>
                 <th>
                   <abbr title="id">{{ user.id }}</abbr>

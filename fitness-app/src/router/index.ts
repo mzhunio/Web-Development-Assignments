@@ -1,4 +1,5 @@
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
+import { authState } from "@/state/user";
+import type { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 import FriendsActivity from "@/views/FriendsActivity.vue";
 import FriendsActivityWorkout from "@/components/FriendsActivityWorkout.vue";
 import Home from "@/views/Home.vue";
@@ -22,11 +23,13 @@ const router = createRouter({
       path: "/myActivity",
       name: "myActivity",
       component: MyActivity,
+      beforeEnter: secureRoute,
     },
     {
       path: "/friendsActivity",
       name: "friendsActivity",
       component: FriendsActivity,
+      beforeEnter: secureRoute,
     },
     {
       path: "/friendsActivity/workout/:username",
@@ -50,6 +53,7 @@ const router = createRouter({
       path: "/user",
       name: "user",
       component: User,
+      beforeEnter: secureRoute,
     },
     {
       path: "/login",
@@ -69,14 +73,22 @@ const router = createRouter({
   ],
 });
 
-export default router
+export default router;
 
+function secureRoute(
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  next: NavigationGuardNext
+) {
+  if (authState.username.value) {
+    next();
+  } else {
+    next("/login");
+  }
+}
 
-// function secureRoute (to : RouteLocationNormalized, from : RouteLocationNormalized, next : NavigationGuardNext ) {
-//   const session = useSession();
-//   if (session.user) {
-//       next()
-//   } else { 
-//       next('/login')
-//   }
-// }
+export const routes = {
+  goToUserPage() {
+    return router.push('/user')
+  }
+};

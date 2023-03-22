@@ -13,6 +13,7 @@ if (userWorkout) {
 } else {
   console.error("Sorry, I could not found provided user.");
 }
+
 </script>
 
 <template>

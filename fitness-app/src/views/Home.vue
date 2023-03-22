@@ -9,13 +9,13 @@ let count = 0;
         <h2 class="tittle">Today</h2>
         <div class="columns is-mobile is-centered is-multiline">
             <div class="column is-half">
-              <h3 class="value">1.5</h3>
+              <h3 class="value">Arm Day</h3>
               <caption class="caption">
-                Distance
+                Exercise Name
               </caption>
             </div>
             <div class="column is-half">
-              <h3 class="value">3 Hours</h3>
+              <h3 class="value">40 min</h3>
               <caption class="caption">
                 Duration
               </caption>
@@ -39,13 +39,13 @@ let count = 0;
         <h2 class="tittle">Last Week</h2>
         <div class="columns is-mobile is-centered is-multiline">
             <div class="column is-half">
-              <h3 class="value">1.5</h3>
+              <h3 class="value">Leg Day</h3>
               <caption class="caption">
-                Distance
+               Exercise Name
               </caption>
             </div>
             <div class="column is-half">
-              <h3 class="value">3 Hours</h3>
+              <h3 class="value">2 Hours</h3>
               <caption class="caption">
                 Duration
               </caption>

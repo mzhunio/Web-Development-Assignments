@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import router from "@/router";
+import router, { routes } from "@/router";
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { authState } from "../state/user";
 
 const isMenuActive = ref(false);
 const isUserLoggedIn = computed(() => !!authState.username.value);
-
 
 function onLogout(): void {
   logOutApi();
@@ -21,7 +20,6 @@ function logOutApi() {
     router.push("/login");
   }, 3000);
 }
-
 </script>
 
 <template>
@@ -44,14 +42,22 @@ function logOutApi() {
 
       <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
         <div class="navbar-start">
-          <router-link to="/myActivity" class="navbar-item">
+          <router-link
+            v-if="isUserLoggedIn"
+            to="/myActivity"
+            class="navbar-item"
+          >
             <span class="icon">
               <i class="fas fa-running"></i>
             </span>
             <span>My Activity</span>
           </router-link>
 
-          <router-link to="/friendsActivity" class="navbar-item">
+          <router-link
+            v-if="isUserLoggedIn"
+            to="/friendsActivity"
+            class="navbar-item"
+          >
             <span class="icon">
               <i class="fas fa-people-group"></i>
             </span>
@@ -75,10 +81,13 @@ function logOutApi() {
           <RouterLink to="/search" class="navbar-item">Search</RouterLink>
           <RouterLink to="/about" class="navbar-item">About</RouterLink> -->
 
-          <div class="navbar-item has-dropdown is-hoverable">
+          <div
+            v-if="isUserLoggedIn"
+            class="navbar-item has-dropdown is-hoverable"
+          >
             <a class="navbar-link"> Admin </a>
             <div class="navbar-dropdown">
-              <a class="navbar-item" href="./user"> Users </a>
+              <a class="navbar-item" @click="routes.goToUserPage()"> Users </a>
             </div>
           </div>
         </div>
