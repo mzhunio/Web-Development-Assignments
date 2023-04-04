@@ -7,6 +7,11 @@ import { authState } from "../state/user";
 const isMenuActive = ref(false);
 const isUserLoggedIn = computed(() => !!authState.username.value);
 
+// function toggleMenu() {
+//   isMenuActive.value = !isMenuActive.value;
+//   console.log({ isMenuActive });
+// }
+
 function onLogout(): void {
   logOutApi();
 }
@@ -32,7 +37,8 @@ function logOutApi() {
         <div
           class="navbar-burger"
           :class="{ 'is-active': isMenuActive }"
-          @click="isMenuActive = !isMenuActive"
+          @click="(isMenuActive = !isMenuActive)"
+          
         >
           <span></span>
           <span></span>
