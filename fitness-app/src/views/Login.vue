@@ -2,8 +2,8 @@
 import router from "@/router";
 import { authState } from "@/state/user";
 
-let username = "";
-let password = "";
+let username = "mzhunio";
+let password = "12345";
 
 function login() {
   if (!username) {

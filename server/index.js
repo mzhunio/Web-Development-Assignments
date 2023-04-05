@@ -1,28 +1,45 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
 const app = express();
-require("dotenv").config();
-// const exercisesController = require("./routes/exercises.router");
 
-const PORT = process.env.PORT || 3000;
+app.use(bodyParser.json());
+app.use(cors());
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+let workouts = [];
 
 app.get("/api/v1/", (req, res) => {
   res.send("Hello World From Express");
 });
-// .use("/api/v1/exercises", exercisesController);
 
-app.get("/workout/:id", (req, res) => {
-  const workout = [
-    { workoutName: "Leg" },
-    { workoutName: "Arm" },
-    { workoutName: "Back" },
-  ];
-
-  res.send(workout);
+app.get("/api/v1/workouts", (req, res) => {
+  res.json(workouts);
 });
 
-app.listen(PORT, () => {
-  console.log("Server is Running...");
+app.post("/api/v1/workouts", (req, res) => {
+  const { workoutName } = req.body;
+  const newExercise = {
+    id: workouts.length + 1,
+    workoutName: workoutName,
+  };
+
+  workouts.push(newExercise);
+  res.json(newExercise);
 });
+
+const port = 3000;
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+// app.get("/workout/:id", (req, res) => {
+//   const workout = [
+//     { workoutName: "Leg" },
+//     { workoutName: "Arm" },
+//     { workoutName: "Back" },
+//   ];
+
+//   res.send(workout);
+// });
