@@ -1,24 +1,24 @@
-Active: 1680705093392@@127.0.0.1@3306@fitness_app
+CREATE DATABASE IF NOT EXISTS fitness;
 
-CREATE TABLE users(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR (25) NOT NULL UNIQUE,
-    email VARCHAR (50) NOT NULL UNIQUE,
-    password VARCHAR (50) NOT NULL,
-    is_admin BOOLEAN 
+USE fitness;
+
+CREATE TABLE IF NOT EXISTS User (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  isAdmin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-CREATE TABLE exercises(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    exercise_name VARCHAR (50) NOT NULL,
-    sets INT NOT NULL, 
-    repetitions int NOT NULL
+CREATE TABLE IF NOT EXISTS Exercise (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    exerciseName VARCHAR (255) NOT NULL,
+    sets INT NULL, 
+    repetitions INT NULL
 );
 
-CREATE TABLE workouts(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    exercise_id INT,
-    workout_name VARCHAR (30) NOT NULL,
-    duration VARCHAR(30),
-    FOREIGN KEY (exercise_id) REFERENCES exercises(id)
+CREATE TABLE IF NOT EXISTS Workout (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR (30) NOT NULL,
+    duration VARCHAR(30) NULL
 );
