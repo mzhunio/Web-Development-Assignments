@@ -34,12 +34,3 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// app.get("/workout/:id", (req, res) => {
-//   const workout = [
-//     { workoutName: "Leg" },
-//     { workoutName: "Arm" },
-//     { workoutName: "Back" },
-//   ];
-
-//   res.send(workout);
-// });
