@@ -44,7 +44,11 @@ async function startServer() {
   }
 
   // TODO: Add this to UPDATE /user/:id
-  async function updateUser(id, password, isAdmin) {
+  async function updateUser(id, changes) {
+    const user = await getUser(id);
+
+    const { password, isAdmin } = { ...user, ...changes };
+
     await connection.execute(
       "UPDATE User SET password = ?, isAdmin = ? WHERE id = ?;",
       [password, isAdmin, id]
@@ -82,8 +86,13 @@ async function startServer() {
 
   app.get("/user", async (req, res) => {
     try {
-      const [rows] = await connection.execute("SELECT * FROM User;");
-      res.send(rows);
+      const [users] = await connection.execute("SELECT * FROM User;");
+
+      for (const user of users) {
+        user.workouts = await getWorkoutsByUser(user.id);
+      }
+
+      res.send(users);
     } catch (err) {
       res.status(400).send({
         message: err.message,
@@ -106,11 +115,10 @@ async function startServer() {
 
   app.put("/user/:id", async (req, res) => {
     const { id } = req.params;
-    // 2. object destructuring
-    const { password, isAdmin } = req.body;
+    const changes = req.body;
 
     try {
-      const user = await updateUser(id, password, isAdmin);
+      const user = await updateUser(id, changes);
       res.send(user);
     } catch (err) {
       res.status(400).send({
@@ -247,19 +255,30 @@ async function startServer() {
     }
   });
 
-  //Workout GET, POST, PUT, DELETE & Functions
-  async function getWorkout() {
+    //Workout GET, POST, PUT, DELETE & Functions
+  async function getWorkouts() {
+    const [rows] = await connection.execute("SELECT * FROM Workout");
+    return rows;
+  }
+
+  async function getWorkoutsByUser(id) {
+    const [rows] = await connection.execute("SELECT * FROM Workout WHERE userId = ?", [id]);
+    return rows;
+  }
+
+  async function getWorkout(id) {
     const [rows] = await connection.execute(
       "SELECT * FROM Workout WHERE id = ?",
       [id]
     );
+
     return rows[0];
   }
 
-  async function createWorkout(name, duration) {
+  async function createWorkout(name, duration, userId) {
     const [result] = await connection.execute(
-      `INSERT INTO Workout (name, duration) VALUES (?, ?);`,
-      [name, duration]
+      `INSERT INTO Workout (name, duration, userId) VALUES (?, ?, ?);`,
+      [name, duration, userId]
     );
 
     const [rows] = await connection.execute(
@@ -270,7 +289,10 @@ async function startServer() {
     return rows[0];
   }
 
-  async function updateWorkout(id, name, duration) {
+  async function updateWorkout(id, changes) {
+    const workout = await getWorkout(id);
+    const { name, duration } = { ...workout, ...changes};
+
     await connection.execute(
       "UPDATE Workout SET name = ?, duration = ? WHERE id = ?;",
       [name, duration, id]
@@ -306,8 +328,13 @@ async function startServer() {
 
   app.get("/workout", async (req, res) => {
     try {
-      const [rows] = await connection.execute("SELECT * FROM Workout;");
-      res.send(rows);
+      const workouts = await getWorkouts();
+
+      for (const workout of workouts) {
+        workout.user = await getUser(workout.userId);
+      }
+
+      res.send(workouts);
     } catch (err) {
       res.status(400).send({
         message: err.message,
@@ -316,10 +343,13 @@ async function startServer() {
   });
 
   app.post("/workout", async (req, res) => {
-    const { name, duration } = req.body;
+    const { name, duration, userId } = req.body;
+
+    console.log({name, duration, userId});
 
     try {
-      const workout = await createWorkout(name, duration);
+      const workout = await createWorkout(name, duration, userId);
+      workout.user = await getUser(workout.userId);
       res.send(workout);
     } catch (err) {
       res.status(400).send({
@@ -330,10 +360,10 @@ async function startServer() {
 
   app.put("/workout/:id", async (req, res) => {
     const { id } = req.params;
-    const { name, duration } = req.body;
+    const changes = req.body;
 
     try {
-      const workout = await updateWorkout(id, name, duration);
+      const workout = await updateWorkout(id, changes);
       res.send(workout);
     } catch (err) {
       res.status(400).send({

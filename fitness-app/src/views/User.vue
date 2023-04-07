@@ -1,6 +1,25 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { authState, users } from "../state/user";
+import axios from 'axios';
+
+async function getUsers() {
+  const res  = await axios.get('http://localhost:3000/user');
+
+  users.value = res.data;
+}
+
+async function createUser(email: string, password: string, isAdmin: boolean) {
+  const res  = await axios.post('http://localhost:3000/user', {
+    email,
+    password,
+    isAdmin
+  });
+
+  await getUsers();
+}
+
+getUsers();
 
 
 const isUserLoggedIn = computed(() => !!authState.username.value);

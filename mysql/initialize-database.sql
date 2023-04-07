@@ -20,5 +20,21 @@ CREATE TABLE IF NOT EXISTS Exercise (
 CREATE TABLE IF NOT EXISTS Workout (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR (30) NOT NULL,
-    duration VARCHAR(30) NULL
+    duration VARCHAR(30) NULL,
+    userId INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES User(id)
 );
+
+INSERT INTO User (username, email, password, isAdmin) VALUES
+("john", "john@fitnessapp.com", "123", false);
+
+INSERT INTO Workout (name, duration, userId) VALUES 
+("Workout #1", "1 hr", LAST_INSERT_ID()),
+("Workout #2", "30 mins", LAST_INSERT_ID());
+
+INSERT INTO User (username, email, password, isAdmin) VALUES
+("maria", "maria@fitnessapp.com", "123", false);
+
+INSERT INTO Workout (name, duration, userId) VALUES 
+("Workout #3", "1 hr 5 mins", LAST_INSERT_ID()),
+("Workout #4", "25 mins", LAST_INSERT_ID());
