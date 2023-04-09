@@ -13,6 +13,8 @@ app.get("/", (req, res) => {
 });
 
 app.use(userRouter);
+// app.user(workoutRouter);
+// app.use(exerciseRouter);
 
 const port = 3000;
 const server = app.listen(port, () =>

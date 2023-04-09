@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { onDeleteWorkout } from "@/state/modal";
-import router from "@/router";
-import { users } from "@/state/user";
 import { friendsActivityWorkouts, workout } from "@/state/workout";
 
-function goToWorkout(username: string) {
-  router.push("/friendsActivity/workout/" + username);
-}
 </script>
 
 <template>

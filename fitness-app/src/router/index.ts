@@ -31,11 +31,11 @@ const router = createRouter({
       component: FriendsActivity,
       beforeEnter: secureRoute,
     },
-    {
-      path: "/friendsActivity/workout/:username",
-      name: "Friends ACtivity Workout",
-      component: FriendsActivityWorkout,
-    },
+    // {
+    //   path: "/friendsActivity/workout/:username",
+    //   name: "Friends ACtivity Workout",
+    //   component: FriendsActivityWorkout,
+    // },
     {
       path: "/search",
       name: "search",

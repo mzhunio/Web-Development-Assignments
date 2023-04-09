@@ -6,3 +6,14 @@ export interface WorkoutModel extends RowDataPacket {
   duration: number;
   userId: number;
 }
+
+export interface CreateWorkoutModel {
+  name: string;
+  duration: string;
+  userId: number;
+}
+
+export interface UpdateWorkoutModel {
+  name?: string;
+  duration?: string;
+}
