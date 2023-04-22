@@ -1,28 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { authState, users } from "../state/user";
-import axios from 'axios';
+import { getAllUsers } from "@/service/UserService";
+import { users } from "../state/user";
+import formatDistanceToNow from "date-fns/formatDistanceToNowStrict";
 
 async function getUsers() {
-  const res  = await axios.get('http://localhost:3000/user');
+  const allUsers = await getAllUsers();
 
-  users.value = res.data;
-}
-
-async function createUser(email: string, password: string, isAdmin: boolean) {
-  const res  = await axios.post('http://localhost:3000/user', {
-    email,
-    password,
-    isAdmin
-  });
-
-  await getUsers();
+  users.value = allUsers;
 }
 
 getUsers();
-
-
-const isUserLoggedIn = computed(() => !!authState.username.value);
 </script>
 
 <template>
@@ -59,6 +46,9 @@ const isUserLoggedIn = computed(() => !!authState.username.value);
                 </th>
                 <th>
                   <abbr title="isAdmin">{{ user.isAdmin }}</abbr>
+                </th>
+                <th>
+                  <abbr title="lastActive">{{ formatDistanceToNow(new Date(user.lastActive), { includeSeconds: true, addSuffix: true }) }}</abbr>
                 </th>
                 <th>
                   <abbr title="Played">

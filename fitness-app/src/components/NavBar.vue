@@ -1,29 +1,20 @@
 <script setup lang="ts">
+import { AuthService } from "@/service/AuthService";
 import router, { routes } from "@/router";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { RouterLink } from "vue-router";
-import { authState } from "../state/user";
+import { isUserLoggedIn, user } from "../state/user";
 
 const isMenuActive = ref(false);
-const isUserLoggedIn = computed(() => !!authState.username.value);
 
-// function toggleMenu() {
-//   isMenuActive.value = !isMenuActive.value;
-//   console.log({ isMenuActive });
-// }
-
-function onLogout(): void {
-  logOutApi();
+function toggleMenu() {
+  isMenuActive.value = !isMenuActive.value;
+  console.log({ isMenuActive });
 }
 
-function logOutApi() {
-  console.log("Logging out...");
-
-  setTimeout(() => {
-    console.log("Logged out successfully");
-    authState.username.value = "";
-    router.push("/login");
-  }, 3000);
+function onLogout() {
+  AuthService.logout(user.value!.id);
+  router.push("/");
 }
 </script>
 
@@ -37,8 +28,7 @@ function logOutApi() {
         <div
           class="navbar-burger"
           :class="{ 'is-active': isMenuActive }"
-          @click="(isMenuActive = !isMenuActive)"
-          
+          @click="toggleMenu"
         >
           <span></span>
           <span></span>
@@ -82,11 +72,6 @@ function logOutApi() {
             About
           </router-link>
 
-          <!-- <RouterLink to="/myActivity" class="navbar-item">My Activity</RouterLink>
-          <RouterLink to="/friendsActivity" class="navbar-item">Friends Activity</RouterLink>
-          <RouterLink to="/search" class="navbar-item">Search</RouterLink>
-          <RouterLink to="/about" class="navbar-item">About</RouterLink> -->
-
           <div
             v-if="isUserLoggedIn"
             class="navbar-item has-dropdown is-hoverable"
@@ -102,7 +87,7 @@ function logOutApi() {
           <div class="navbar-item">
             <div class="buttons">
               <button v-if="isUserLoggedIn" class="button">
-                Welcome {{ authState.username }}
+                <span> {{ user?.username }} </span>
               </button>
               <button v-if="isUserLoggedIn" class="button" @click="onLogout()">
                 Log out

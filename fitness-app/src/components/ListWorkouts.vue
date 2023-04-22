@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { authState } from "@/state/user";
+import { user } from "@/state/user";
 import { onDeleteWorkout } from "@/state/modal";
 import { workouts } from "@/state/workout";
 </script>
@@ -20,7 +20,7 @@ import { workouts } from "@/state/workout";
         <div class="content">
           <div class="level">
             <div class="level-left">
-              <strong>{{ workout.workoutName }}</strong> <small> {{ authState.username }}</small>
+              <strong>{{ workout.workoutName }}</strong> <small> {{ user?.username }}</small>
             </div>
             <div class="level-right">
               Duration ({{ workout.duration }} mins)

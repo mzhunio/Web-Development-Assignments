@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import router from "@/router";
-import { reactive } from "vue";
-import { authState } from "../state/user";
-
+import {
+  AuthError,
+  getPasswordErrors,
+  getUsernameErrors,
+  isEmailValid,
+  register,
+} from "@/service/AuthService";
+import { computed, reactive } from "vue";
+import { user } from "../state/user";
 
 const registerState = reactive({
   username: "lucy",
@@ -11,72 +16,40 @@ const registerState = reactive({
   email: "a@a.com",
 });
 
-function onRegisterClicked(
+const usernameErrors = computed(() =>
+  getUsernameErrors(registerState.username)
+);
+const passwordErrors = computed(() =>
+  getPasswordErrors(registerState.password, registerState.rePassword)
+);
+
+async function onRegisterClicked(
   username: string,
   password: string,
   rePassword: string,
   email: string
-): void {
+): Promise<void> {
   const isFormValid =
-    isUsernameValid(username) &&
-    isPasswordValid(password, rePassword) &&
+    getUsernameErrors(username) &&
+    getPasswordErrors(password, rePassword) &&
     isEmailValid(email);
 
   if (!isFormValid) {
     return;
   }
 
-  registerApi(username, password, email);
-}
-
-function registerApi(username: string, password: string, email: string) {
-  console.log("Registering user...");
-  setTimeout(() => onRegistrationSuccess(username), 3000);
-}
-
-function onRegistrationSuccess(username: string) {
-  console.log('Registration success');
-  authState.username.value = username;
-  router.push('/');
-}
-
-function isUsernameValid(username: string): boolean {
-  const hasMinimumLength = username.length >= 4;
-
-  if (!hasMinimumLength) {
-    console.error("Invalid username: Please enter at least 4 characters");
+  try {
+    user.value = await register({
+      username,
+      password,
+      email,
+      isAdmin: false,
+      lastActive: "",
+    });
+  } catch (error) {
+    user.value = null;
+    // TODO: ShowErrorMessage
   }
-
-  return hasMinimumLength;
-}
-
-function isPasswordValid(password: string, rePassword: string) {
-  const arePasswordAndReEnterPasswordEqual = password === rePassword;
-  if (!arePasswordAndReEnterPasswordEqual) {
-    console.error(
-      "Invalid Password: Password and re-enter password are not equal"
-    );
-  }
-
-  const hasMinimumLength =
-    arePasswordAndReEnterPasswordEqual && password.length >= 5;
-  if (!hasMinimumLength) {
-    console.error("Invalid Password: Please enter at least 5 characters");
-  }
-
-  return arePasswordAndReEnterPasswordEqual && hasMinimumLength;
-}
-
-function isEmailValid(email: string | null): boolean {
-  const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const isEmailValid = !!email?.toLowerCase().match(emailRegex);
-
-  if (!isEmailValid) {
-    console.error("Invalid email");
-  }
-
-  return !!isEmailValid;
 }
 </script>
 
@@ -91,11 +64,15 @@ function isEmailValid(email: string | null): boolean {
             <div class="card-content">
               <div class="title mt-2 has-text-centered">Register</div>
 
+              <!-- Username -->
               <div class="field">
                 <label class="label">Username</label>
                 <div class="control has-icons-left">
                   <input
                     class="input"
+                    :class="{
+                      'is-danger': usernameErrors,
+                    }"
                     type="text"
                     v-model="registerState.username"
                     placeholder="Username"
@@ -103,9 +80,18 @@ function isEmailValid(email: string | null): boolean {
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                   </span>
+
+                  <!-- Username Error -->
+                  <div
+                    class="mt-1 has-text-danger is-size-7"
+                    v-if="usernameErrors?.InvalidUsernameMinLength"
+                  >
+                    {{ AuthError.InvalidUsernameMinLength }}
+                  </div>
                 </div>
               </div>
 
+              <!-- Password -->
               <div class="field">
                 <label class="label">Password</label>
                 <div class="control has-icons-left">
@@ -121,6 +107,7 @@ function isEmailValid(email: string | null): boolean {
                 </div>
               </div>
 
+              <!-- Re-Password -->
               <div class="field">
                 <label class="label">Re-enter Password</label>
                 <div class="control has-icons-left">
@@ -133,9 +120,26 @@ function isEmailValid(email: string | null): boolean {
                   <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
                   </span>
+
+                  <!-- Password Errors -->
+                  <div
+                    class="mt-1 has-text-danger is-size-7"
+                    v-if="
+                      passwordErrors?.InvalidPasswordAndRePasswordDoNotMatch
+                    "
+                  >
+                    {{ AuthError.InvalidPasswordAndRePasswordDoNotMatch }}
+                  </div>
+                  <div
+                    class="mt-1 has-text-danger is-size-7"
+                    v-if="passwordErrors?.InvalidPasswordMinLength"
+                  >
+                    {{ AuthError.InvalidPasswordMinLength }}
+                  </div>
                 </div>
               </div>
 
+              <!-- Email -->
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control has-icons-left">
@@ -155,6 +159,10 @@ function isEmailValid(email: string | null): boolean {
                 <div class="control is-flex">
                   <button
                     class="button is-warning is-flex-grow-1"
+                    :class="{
+                      'is-danger': usernameErrors,
+                    }"
+                    :disabled?="usernameErrors"
                     @click="
                       onRegisterClicked(
                         registerState.username,

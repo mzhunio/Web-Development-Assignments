@@ -1,6 +1,8 @@
 import { ref } from "vue";
+// import workouts from "../data/workouts.json";
 
 export interface Workout {
+  // userId: number,
   workoutName: string;
   duration: number;
   exercises: Exercise[];
@@ -132,3 +134,4 @@ export const friendsActivityWorkouts = ref([
 export const friendsWorkouts = ref<Workout[]>(michelleWorkouts);
 
 export const workouts = ref<Workout[]>(michelleWorkouts);
+

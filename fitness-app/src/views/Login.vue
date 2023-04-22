@@ -1,37 +1,30 @@
 <script setup lang="ts">
 import router from "@/router";
-import { authState } from "@/state/user";
+import {
+  AuthError,
+  AuthService,
+  getPasswordErrors,
+  getUsernameErrors,
+} from "@/service/AuthService";
+import { computed, ref } from "vue";
 
-let username = "mzhunio";
-let password = "12345";
+const username = ref("mzhunio");
+const password = ref("12345");
 
-function login() {
-  if (!username) {
-    throw new Error("Please provide username");
+const usernameErrors = computed(() => getUsernameErrors(username.value));
+const passwordErrors = computed(() =>
+  getPasswordErrors(password.value, password.value)
+);
+
+let loginError: string | null = null;
+
+async function onLoginClicked() {
+  try {
+    await AuthService.login(username.value, password.value);
+    await router.push("/");
+  } catch (error: any) {
+    loginError = error.message ?? "Could not error";
   }
-
-  if (!password) {
-    throw new Error("Please provide password");
-  }
-
-  localStorage.setItem("username", username);
-  localStorage.setItem("password", password);
-
-  loginApi(username);
-}
-
-function loginApi(username: string) {
-  console.log("Logging in...");
-
-  console.log("Logging successfully");
-  authState.username.value = username;
-  router.push("/");
-
-  // setTimeout(() => {
-  //   console.log("Logging successfully");
-  //   authState.username.value = username;
-  //   router.push('/');
-  // }, 3000);
 }
 </script>
 
@@ -46,11 +39,15 @@ function loginApi(username: string) {
             <div class="card-content">
               <div class="title mt-2 has-text-centered">Sign In</div>
 
+              <!-- USERNAME -->
               <div class="field">
                 <label class="label">Username</label>
                 <div class="control has-icons-left">
                   <input
                     class="input"
+                    :class="{
+                      'is-danger': usernameErrors,
+                    }"
                     type="text"
                     placeholder="Username"
                     v-model="username"
@@ -58,14 +55,26 @@ function loginApi(username: string) {
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                   </span>
+
+                  <!-- USERNAME ERRORS -->
+                  <div
+                    class="mt-1 has-text-danger is-size-7"
+                    v-if="usernameErrors?.InvalidUsernameMinLength"
+                  >
+                    {{ AuthError.InvalidUsernameMinLength }}
+                  </div>
                 </div>
               </div>
 
+              <!-- PASSWORD -->
               <div class="field">
                 <label class="label">Password</label>
                 <div class="control has-icons-left">
                   <input
                     class="input"
+                    :class="{
+                      'is-danger': passwordErrors,
+                    }"
                     type="password"
                     placeholder="Password"
                     v-model="password"
@@ -73,14 +82,30 @@ function loginApi(username: string) {
                   <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
                   </span>
+
+                  <!-- PASSWORD ERRORS -->
+                  <div
+                    class="mt-1 has-text-danger is-size-7"
+                    v-if="passwordErrors?.InvalidPasswordMinLength"
+                  >
+                    {{ AuthError.InvalidPasswordMinLength }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOGIN ERRORS -->
+              <div class="field" v-if="loginError">
+                <div class="mt-1 has-text-danger is-size-7">
+                  We could not login because of invalid login credentials
                 </div>
               </div>
 
               <div class="field">
                 <div class="control is-flex">
                   <button
+                    :disabled="!!usernameErrors || !!passwordErrors"
                     class="button is-warning is-flex-grow-1"
-                    @click="login"
+                    @click="onLoginClicked"
                   >
                     Sign in
                   </button>

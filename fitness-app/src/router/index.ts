@@ -1,4 +1,6 @@
-import { authState } from "@/state/user";
+import { user } from "@/state/user";
+import { updateCurrentUser } from "@/service/AuthService";
+import { LocalStorage } from "@/service/LocalStorageServices";
 import type { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 import FriendsActivity from "@/views/FriendsActivity.vue";
 import FriendsActivityWorkout from "@/components/FriendsActivityWorkout.vue";
@@ -80,7 +82,12 @@ function secureRoute(
   from: RouteLocationNormalized,
   next: NavigationGuardNext
 ) {
-  if (authState.username.value) {
+  const currentUser = LocalStorage.getCurrentUser();
+
+  if (user.value) {
+    next();
+  } else if (currentUser) {
+    updateCurrentUser(currentUser);
     next();
   } else {
     next("/login");
@@ -89,6 +96,6 @@ function secureRoute(
 
 export const routes = {
   goToUserPage() {
-    return router.push('/user')
-  }
+    return router.push("/user");
+  },
 };
