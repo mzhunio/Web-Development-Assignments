@@ -1,0 +1,42 @@
+{
+    "workouts" : [
+        {
+          "userId": 1,
+          "workoutName": "Leg Workout",
+          "duration": 30,
+          "exercises": [
+            { "exerciseName": "Squats", 
+            "sets": 4, 
+            "repetitions": 15 },
+            { "exerciseName": "Lunges",
+             "sets": 3, 
+             "repetitions": 10 },
+            { "exerciseName": "Leg Press",
+             "sets": 4, 
+             "repetitions": 5 },
+            { "exerciseName": "Sumo Squat",
+             "sets": 3, 
+             "repetitions": 8 }
+          ]
+        },
+        {
+            "userId": 2,
+            "workoutName": "Leg Workout",
+            "duration": 60,
+            "exercises": [
+              { "exerciseName": "Lunges", 
+              "sets": 4, 
+              "repetitions": 15 },
+              { "exerciseName": "Leg Press",
+               "sets": 4, 
+               "repetitions": 20 },
+              { "exerciseName": "Sumo Squat",
+               "sets": 4, 
+               "repetitions": 15 },
+              { "exerciseName": "Lunges",
+               "sets": 3, 
+               "repetitions": 10 }
+            ]
+          }
+    ]
+}
