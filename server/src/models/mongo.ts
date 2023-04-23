@@ -1,4 +1,4 @@
-const { MongoClient, ObjectId  } = require('mongodb');
+import { MongoClient, ObjectId  } from 'mongodb'
 
 const url = process.env.MONGO_URL ?? "";
 const DB_Name = process.env.MONGO_DB_NAME ?? 'chopify';
