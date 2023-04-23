@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "userId": 1,
+      "userName": "mzhunio",
+      "password": "12345",
+      "email": "mzhunio@a.com",
+      "isAdmin": true,
+      "lastActive": "20 min ago"
+    },
+    {
+      "userId": 2,
+      "userName": "gfugon",
+      "password": "12345",
+      "email": "gfugon@a.com",
+      "isAdmin": false,
+      "lastActive": "1 hour ago"
+    },
+    {
+        "userId": 3,
+        "userName": "rzhunio",
+        "password": "12345",
+        "email": "rzhunio@a.com",
+        "isAdmin": false,
+        "lastActive": "20 min ago"
+      }
+  ]
+}
