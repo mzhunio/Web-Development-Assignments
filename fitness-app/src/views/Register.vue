@@ -1,19 +1,19 @@
 <script setup lang="ts">
+import { routes } from "@/router";
 import {
   AuthError,
+  AuthService,
+  getEmailErrors,
   getPasswordErrors,
   getUsernameErrors,
-  isEmailValid,
-  register,
 } from "@/service/AuthService";
 import { computed, reactive } from "vue";
-import { user } from "../state/user";
 
 const registerState = reactive({
-  username: "lucy",
+  username: "mzhunio",
   password: "12345",
   rePassword: "12345",
-  email: "a@a.com",
+  email: "mzhunio@fitnessapp.com",
 });
 
 const usernameErrors = computed(() =>
@@ -22,34 +22,17 @@ const usernameErrors = computed(() =>
 const passwordErrors = computed(() =>
   getPasswordErrors(registerState.password, registerState.rePassword)
 );
+const emailErrors = computed(() => getEmailErrors(registerState.email));
 
-async function onRegisterClicked(
-  username: string,
-  password: string,
-  rePassword: string,
-  email: string
-): Promise<void> {
-  const isFormValid =
-    getUsernameErrors(username) &&
-    getPasswordErrors(password, rePassword) &&
-    isEmailValid(email);
-
-  if (!isFormValid) {
-    return;
-  }
-
-  try {
-    user.value = await register({
-      username,
-      password,
-      email,
-      isAdmin: false,
-      lastActive: "",
-    });
-  } catch (error) {
-    user.value = null;
-    // TODO: ShowErrorMessage
-  }
+async function onRegisterClicked() {
+  const { username, email, password } = registerState;
+  await AuthService.register({
+    username,
+    email,
+    password,
+    isAdmin: false,
+  });
+  await routes.goToHomePage();
 }
 </script>
 
@@ -153,6 +136,14 @@ async function onRegisterClicked(
                     <i class="fa-solid fa-envelope"></i>
                   </span>
                 </div>
+
+                <!-- Email Error -->
+                <div
+                  class="mt-1 has-text-danger is-size-7"
+                  v-if="emailErrors?.InvalidEmail"
+                >
+                  {{ AuthError.InvalidEmail }}
+                </div>
               </div>
 
               <div class="field">
@@ -160,17 +151,13 @@ async function onRegisterClicked(
                   <button
                     class="button is-warning is-flex-grow-1"
                     :class="{
-                      'is-danger': usernameErrors,
+                      'is-danger':
+                        !!usernameErrors || !!emailErrors || !!passwordErrors,
                     }"
-                    :disabled?="usernameErrors"
-                    @click="
-                      onRegisterClicked(
-                        registerState.username,
-                        registerState.password,
-                        registerState.rePassword,
-                        registerState.email
-                      )
+                    :disabled="
+                      !!usernameErrors || !!emailErrors || !!passwordErrors
                     "
+                    @click="onRegisterClicked()"
                   >
                     Register
                   </button>

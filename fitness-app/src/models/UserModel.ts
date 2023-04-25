@@ -3,7 +3,6 @@ export interface CreateUserModel {
   email: string;
   password: string;
   isAdmin: boolean;
-  lastActive: string;
 }
 
 export interface User {

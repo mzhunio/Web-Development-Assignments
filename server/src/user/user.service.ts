@@ -33,6 +33,7 @@ export class UserService {
       email,
       password,
       isAdmin,
+      lastActive: new Date().toISOString(),
     });
 
     return await this.collection.findOne({ _id: insertedId });
