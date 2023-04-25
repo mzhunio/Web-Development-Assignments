@@ -1,16 +1,15 @@
-import { user } from "@/state/user";
+import Modal from "@/components/Modal.vue";
 import { updateCurrentUser } from "@/service/AuthService";
 import { LocalStorage } from "@/service/LocalStorageServices";
-import type { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
+import { user } from "@/state/user";
 import FriendsActivity from "@/views/FriendsActivity.vue";
-import FriendsActivityWorkout from "@/components/FriendsActivityWorkout.vue";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
-import Modal from "@/components/Modal.vue";
 import MyActivity from "@/views/MyActivity.vue";
 import Register from "@/views/Register.vue";
 import Search from "@/views/Search.vue";
 import User from "@/views/User.vue";
+import type { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -97,5 +96,8 @@ function secureRoute(
 export const routes = {
   goToUserPage() {
     return router.push("/user");
+  },
+  goToHomePage() {
+    return router.push("/");
   },
 };

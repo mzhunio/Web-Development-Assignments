@@ -1,13 +1,14 @@
+import type { LoginModel } from "@/models/AuthModel";
+import type { CreateUserModel, User } from "@/models/UserModel";
 import { user } from "@/state/user";
 import axios from "axios";
-import type { LoginModel } from "@/models/AuthModel";
 import { LocalStorage } from "./LocalStorageServices";
 import { createUser } from "./UserService";
-import type { CreateUserModel, User } from "@/models/UserModel";
 
 const API_URL = "http://localhost:3000";
 
 export enum AuthError {
+  InvalidEmail = "Invalid email: Please enter valid email",
   InvalidUsernameMinLength = "Invalid username: Please enter at least 4 characters",
   InvalidPasswordMinLength = "Invalid Password: Please enter at least 5 characters",
   InvalidPasswordAndRePasswordDoNotMatch = "Invalid Password: Password and re-enter password are not equal",
@@ -26,6 +27,11 @@ export const AuthApi = {
 };
 
 export const AuthService = {
+  async register(createUserModel: CreateUserModel) {
+    user.value = await createUser(createUserModel);
+    LocalStorage.setCurrentUser(user.value);
+  },
+
   async login(username: string, password: string) {
     user.value = await AuthApi.login({ username, password });
     LocalStorage.setCurrentUser(user.value);
@@ -37,10 +43,6 @@ export const AuthService = {
     LocalStorage.removeCurrentUser();
   },
 };
-
-export function register(createUserModel: CreateUserModel): Promise<User> {
-  return createUser(createUserModel);
-}
 
 export function updateCurrentUser(currentUser: User) {
   user.value = currentUser;
@@ -71,14 +73,14 @@ export function getPasswordErrors(password: string, rePassword: string) {
   return null;
 }
 
-export function isEmailValid(email: string | null): boolean {
+export function getEmailErrors(email: string | null) {
   const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const isEmailValid = !!email?.toLowerCase().match(emailRegex);
 
   if (!isEmailValid) {
-    console.error("Invalid email");
+    return { InvalidEmail: true };
   }
 
-  return !!isEmailValid;
+  return null;
 }
