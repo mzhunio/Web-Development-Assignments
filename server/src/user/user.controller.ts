@@ -31,9 +31,7 @@ export class UserController {
     const { id } = req.params;
 
     try {
-      const userWorkouts = await this.userService.getUserWorkouts(
-        parseInt(id, 10)
-      );
+      const userWorkouts = await this.userService.getUserWorkouts(id);
 
       res.send(userWorkouts);
     } catch (err: any) {
