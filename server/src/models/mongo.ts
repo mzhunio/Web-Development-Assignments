@@ -1,15 +1,9 @@
-import { MongoClient, ObjectId  } from 'mongodb'
+import { MongoClient } from "mongodb";
 
-const url = process.env.MONGO_URL ?? "";
-const DB_Name = process.env.MONGO_DB_NAME ?? 'chopify';
+const uri =
+  "mongodb+srv://mzhunio:123password@cluster0.8rysnbi.mongodb.net/?retryWrites=true&w=majority";
 
-const client = new MongoClient(url);
+export const client = new MongoClient(uri);
+export const database = client.db("fitness");
 
-async function connect() {
-    const db = await client.connect();
-    return db.db(DB_Name);
-}
-
-module.exports = {
-    connect, ObjectId, DB_Name
-}
+console.log("✅ MongoDB connected!");

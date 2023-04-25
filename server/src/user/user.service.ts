@@ -1,71 +1,57 @@
-// import { OkPacket, Pool } from "mysql2/promise";
-import { WorkoutModel } from "../workout/workout.model";
-import { CreateUserModel, UpdateUserModel, UserModel } from "./user.model";
+import { ObjectId } from "mongodb";
+import { database } from "../models/mongo";
+import { CreateUserModel, UpdateUserModel } from "./user.model";
 
 export class UserService {
-  // private pool: Pool = pool;
+  collection = database.collection("user");
 
-  // async getUsers(): Promise<UserModel[]> {
-  //   const [users] = 
+  getAllUsers() {
+    return this.collection.find().toArray();
+  }
 
-  //   return users;
-  // }
+  getUserById(id: string) {
+    return this.collection.findOne({ _id: new ObjectId(id) });
+  }
 
-  // async getUser(id: number): Promise<UserModel | null> {
-  //   const [rows] = await this.pool.query<UserModel[]>(
-  //     "SELECT * FROM User WHERE id = ?",
-  //     [id]
-  //   );
+  async getUserWorkouts(userId: string) {
+    const user: any = await this.getUserById(userId);
 
-  //   return rows[0];
-  // }
+    user.workouts = this.collection.find({ userId }).toArray();
 
-  // async getUserWorkouts(id: number): Promise<WorkoutModel[]> {
-  //   const [rows] = await this.pool.query<WorkoutModel[]>(
-  //     "SELECT * FROM Workout WHERE userId = ?",
-  //     [id]
-  //   );
-  //   return rows;
-  // }
+    return user;
+  }
 
-  // async createUser({
-  //   username,
-  //   email,
-  //   password,
-  //   isAdmin,
-  // }: CreateUserModel): Promise<UserModel | null> {
-  //   const [result] = await this.pool.execute<OkPacket>(
-  //     `INSERT INTO User (username, email, password, isAdmin) VALUES (?, ?, ?, ?);`,
-  //     [username, email, password, isAdmin]
-  //   );
+  async createUser({ username, email, password, isAdmin }: CreateUserModel) {
+    const isUserByUsernameFound = await this.collection.findOne({ username });
+    const isUserByEmailFound = await this.collection.findOne({ email });
+    if (isUserByEmailFound || isUserByUsernameFound) {
+      throw new Error("Could not create duplicate user");
+    }
 
-  //   const [rows] = await this.pool.query<UserModel[]>(
-  //     `SELECT * FROM User WHERE id = ?`,
-  //     [result.insertId]
-  //   );
+    const { insertedId } = await this.collection.insertOne({
+      username,
+      email,
+      password,
+      isAdmin,
+    });
 
-  //   return rows[0];
-  // }
+    return await this.collection.findOne({ _id: insertedId });
+  }
 
-  // async updateUser(
-  //   id: number,
-  //   changes: UpdateUserModel
-  // ): Promise<UserModel | null> {
-  //   const user = await this.getUser(id);
+  async updateUser(id: string, changes: UpdateUserModel) {
+    await this.collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: changes }
+    );
 
-  //   const { password, isAdmin } = { ...user, ...changes };
+    return this.getUserById(id);
+  }
 
-  //   await this.pool.execute(
-  //     "UPDATE User SET password = ?, isAdmin = ? WHERE id = ?;",
-  //     [password, isAdmin, id]
-  //   );
+  async deleteUser(id: string) {
+    const user = this.getUserById(id);
 
-  //   return this.getUser(id);
-  // }
+    await this.collection.deleteOne({ _id: new ObjectId(id) });
 
-  // async deleteUser(id: number): Promise<UserModel | null> {
-  //   const user = await this.getUser(id);
-  //   await this.pool.execute("DELETE FROM User WHERE id = ?", [id]);
-  //   return user;
-  // }
+    return user;
+  }
 }

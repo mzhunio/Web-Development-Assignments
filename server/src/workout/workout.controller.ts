@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { WorkoutService } from "./workout.service";
 import { CreateWorkoutModel, UpdateWorkoutModel } from "./workout.model";
+import { WorkoutService } from "./workout.service";
 
 export class WorkoutController {
   private workoutService = new WorkoutService();
 
   async getAllWorkouts(req: Request, res: Response) {
     try {
-      const workouts = await this.workoutService.getWorkouts();
+      const workouts = await this.workoutService.getAllWorkouts();
       res.send(workouts);
     } catch (err: any) {
       const message = err.message ?? "Cannot fetch all workouts";
@@ -19,7 +19,7 @@ export class WorkoutController {
     const { id } = req.params;
 
     try {
-      const workout = await this.workoutService.getWorkout(parseInt(id, 10));
+      const workout = await this.workoutService.getWorkoutById(id);
       res.send(workout);
     } catch (err: any) {
       const message = err.message ?? "Cannot get workout with is ${id}";
@@ -48,10 +48,7 @@ export class WorkoutController {
     const changes = req.body as UpdateWorkoutModel;
 
     try {
-      const workout = await this.workoutService.updateWorkout(
-        parseInt(id, 10),
-        changes
-      );
+      const workout = await this.workoutService.updateWorkout(id, changes);
       res.send(workout);
     } catch (err: any) {
       const message = err.message ?? `Cannot update workout with id ${id}`;
@@ -62,10 +59,10 @@ export class WorkoutController {
 
   async deleteWorkout(req: Request, res: Response) {
     const { id } = req.params;
-    await this.workoutService.getWorkout(parseInt(id, 10));
+    await this.workoutService.getWorkoutById(id);
 
     try {
-      const workout = await this.workoutService.deleteWorkout(parseInt(id, 10));
+      const workout = await this.workoutService.deleteWorkout(id);
       res.send(workout);
     } catch (err: any) {
       const message = err.message ?? `Cannot delete workout with id ${id}`;

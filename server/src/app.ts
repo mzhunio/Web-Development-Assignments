@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
+import "./models/mongo";
 import { userRouter } from "./user/user.router";
 
 const app = express();
@@ -12,16 +13,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Fitness API");
 });
 
+// app.use("/user", userRouter);
 app.use(userRouter);
 // app.user(workoutRouter);
 // app.use(exerciseRouter);
 
-const port = process.env.PORT || 3000 ;
-const server = app.listen(port, () =>
-  console.log(`✅ Server running on http://localhost:${port}`)
-);
-
-export const closeServer = () =>
-  new Promise((resolve) => server.close(resolve));
-
-export { app };
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`✅ Server running on PORT ${port}`));

@@ -1,64 +1,42 @@
-import { OkPacket, Pool } from "mysql2/promise";
-import { pool } from "../database/connection";
-import { WorkoutModel, CreateWorkoutModel, UpdateWorkoutModel } from "./workout.model";
+import { ObjectId } from "mongodb";
+import { database } from "../models/mongo";
+import { CreateWorkoutModel, UpdateWorkoutModel } from "./workout.model";
 
 export class WorkoutService {
-  private pool: Pool = pool;
+  private collection = database.collection("workout");
 
-  async getWorkouts(): Promise<WorkoutModel[]> {
-    const [workouts] = await this.pool.query<WorkoutModel[]>(
-      "SELECT * FROM Workout;"
-    );
-
-    return workouts;
+  getAllWorkouts() {
+    return this.collection.find().toArray();
   }
 
-  async getWorkout(id: number): Promise<WorkoutModel | null> {
-    const [rows] = await this.pool.query<WorkoutModel[]>(
-      "SELECT * FROM Workout WHERE id = ?",
-      [id]
-    );
-
-    return rows[0];
+  getWorkoutById(id: string) {
+    return this.collection.findOne({ _id: new ObjectId(id) });
   }
 
-  async createWorkout({
-    name,
-    duration,
-    userId,
-  }: CreateWorkoutModel): Promise<WorkoutModel | null> {
-    const [result] = await this.pool.execute<OkPacket>(
-      `INSERT INTO Workout (name, duration, userId) VALUES (?, ?, ?);`,
-      [name, duration, userId]
-    );
+  async createWorkout({ name, duration, userId }: CreateWorkoutModel) {
+    const { insertedId } = await this.collection.insertOne({
+      name,
+      duration,
+      userId,
+    });
 
-    const [rows] = await this.pool.query<WorkoutModel[]>(
-      `SELECT * FROM Workout WHERE id = ?`,
-      [result.insertId]
-    );
-
-    return rows[0];
+    return this.collection.findOne({ _id: insertedId });
   }
 
-  async updateWorkout(
-    id: number,
-    changes: UpdateWorkoutModel): Promise<WorkoutModel | null> {
-        const workout = await this.getWorkout(id);
+  async updateWorkout(id: string, changes: UpdateWorkoutModel) {
+    await this.collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: changes }
+    );
 
-        const { name, duration } = { ...workout, ...changes};
-    
-        await this.pool.execute(
-          "UPDATE Workout SET name = ?, duration = ? WHERE id = ?;",
-          [name, duration, id]
-        );
-    
-        return this.getWorkout(id);
-    }
+    return this.getWorkoutById(id);
+  }
 
-    async deleteWorkout(id: number): Promise<WorkoutModel | null> {
-      const workout = await this.getWorkout(id);
-      await this.pool.execute("DELETE FROM User WHERE id = ?", [id]);
-      return workout;
-    }
+  async deleteWorkout(id: string) {
+    const workout = this.getWorkoutById(id);
 
+    await this.collection.deleteOne({ _id: new ObjectId(id) });
+
+    return workout;
+  }
 }
