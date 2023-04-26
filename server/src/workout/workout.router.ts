@@ -9,3 +9,5 @@ workoutRouter.get("/workout/:id", workoutController.getWorkout.bind(workoutContr
 workoutRouter.post("/workout/", workoutController.createWorkout.bind(workoutController));
 workoutRouter.patch("/workout/:id", workoutController.updateWorkout.bind(workoutController));
 workoutRouter.delete("/workout/:id", workoutController.deleteWorkout.bind(workoutController));
+
+export { workoutRouter };

@@ -41,7 +41,7 @@ export class UserController {
   }
 
   async createUser(req: Request, res: Response) {
-    const { username, email, password, isAdmin } = req.body as CreateUserModel;
+    const { username, email, password, isAdmin, lastActive } = req.body as CreateUserModel;
 
     try {
       const user = await this.userService.createUser({
@@ -49,6 +49,7 @@ export class UserController {
         email,
         password,
         isAdmin,
+        lastActive,
       });
       res.send(user);
     } catch (err: any) {

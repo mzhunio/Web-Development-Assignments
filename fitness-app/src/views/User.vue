@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getAllUsers } from "@/service/UserService";
 import { users } from "../state/user";
-import formatDistanceToNow from "date-fns/formatDistanceToNowStrict";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 async function getUsers() {
   const allUsers = await getAllUsers();
@@ -48,7 +48,7 @@ getUsers();
                   <abbr title="isAdmin">{{ user.isAdmin }}</abbr>
                 </th>
                 <th>
-                  <abbr title="lastActive">{{ formatDistanceToNow(new Date(user.lastActive), { includeSeconds: true, addSuffix: true }) }}</abbr>
+                  <abbr title="lastActive">{{ formatDistanceToNow(new Date(user.lastActive), { includeSeconds: true, addSuffix: true}) }}</abbr>
                 </th>
                 <th>
                   <abbr title="Played">

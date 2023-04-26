@@ -4,6 +4,7 @@ export interface UserModel  {
   email: string;
   password: string;
   isAdmin: boolean;
+  lastActive: string;
 }
 
 export interface CreateUserModel {
@@ -11,6 +12,7 @@ export interface CreateUserModel {
   email: string;
   password: string;
   isAdmin: boolean;
+  lastActive: string;
 }
 
 export interface UpdateUserModel {

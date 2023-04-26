@@ -21,7 +21,7 @@ export class UserService {
     return user;
   }
 
-  async createUser({ username, email, password, isAdmin }: CreateUserModel) {
+  async createUser({ username, email, password, isAdmin, lastActive }: CreateUserModel) {
     const isUserByUsernameFound = await this.collection.findOne({ username });
     const isUserByEmailFound = await this.collection.findOne({ email });
     if (isUserByEmailFound || isUserByUsernameFound) {

@@ -22,7 +22,7 @@ export class WorkoutController {
       const workout = await this.workoutService.getWorkoutById(id);
       res.send(workout);
     } catch (err: any) {
-      const message = err.message ?? "Cannot get workout with is ${id}";
+      const message = err.message ?? `Cannot get workout with id ${id}`;
       res.status(400).send({ message });
     }
   }

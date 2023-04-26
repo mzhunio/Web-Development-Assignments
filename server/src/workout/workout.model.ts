@@ -1,16 +1,16 @@
-import { RowDataPacket } from "mysql2";
-
-export interface WorkoutModel extends RowDataPacket {
-  id: number;
+export interface WorkoutModel {
+  id: string;
   name: string;
   duration: number;
-  userId: number;
+  // exercises: any[];
+  // workoutId: string;
 }
 
 export interface CreateWorkoutModel {
   name: string;
   duration: string;
   userId: number;
+  // exercises: any[]
 }
 
 export interface UpdateWorkoutModel {
