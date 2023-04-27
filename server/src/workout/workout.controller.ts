@@ -6,15 +6,15 @@ import { WorkoutService } from "./workout.service";
 export class WorkoutController {
   private workoutService = new WorkoutService();
 
-  // async getAllWorkouts(req: Request, res: Response) {
-  //   try {
-  //     const workouts = await this.workoutService.getAllWorkouts();
-  //     res.send(workouts);
-  //   } catch (err: any) {
-  //     const message = err.message ?? "Cannot fetch all workouts";
-  //     res.status(400).send({ message });
-  //   }
-  // }
+  async getAllWorkouts(req: Request, res: Response) {
+    try {
+      const workouts = await this.workoutService.getAllWorkouts();
+      res.send(workouts);
+    } catch (err: any) {
+      const message = err.message ?? "Cannot fetch all workouts";
+      res.status(400).send({ message });
+    }
+  }
 
   async getAllWorkoutsByUserId(req: Request, res: Response) {
     const { userId } = req.params;

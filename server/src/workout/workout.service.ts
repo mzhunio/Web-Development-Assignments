@@ -8,19 +8,17 @@ export class WorkoutService {
   collection = database.collection<WorkoutModel>("workout");
   exerciseService = new ExerciseService();
 
-  // async getAllWorkouts() {
-  //   const workouts = (await this.collection
-  //     .find()
-  //     .toArray()) as unknown as WorkoutModel[];
+  async getAllWorkouts() {
+    const workouts = await this.collection.find().toArray();
 
-  //   // for (const workout of workouts) {
-  //   //   workout.exercises = await this.exerciseService.getExercisesByWorkout(
-  //   //     workout._id
-  //   //   );
-  //   // }
+    for (const workout of workouts) {
+      workout.exercises = await this.exerciseService.getExercisesByWorkoutId(
+        workout._id
+      );
+    }
 
-  //   return workouts;
-  // }
+    return workouts;
+  }
 
   async getAllWorkoutsByUserId(userId: string) {
     const workouts = await this.collection
