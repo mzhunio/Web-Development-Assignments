@@ -1,34 +1,34 @@
-// import { ObjectId } from "mongodb";
-// import { database } from "../models/mongo";
-// import { CreateExerciseModel } from "./exercise.model";
+import { ObjectId } from "mongodb";
+import { database } from "../models/mongo";
+import { CreateExerciseModel, ExerciseModel } from "./exercise.model";
 
-// export class ExerciseService {
-//   private collection = database.collection("exercise");
+export class ExerciseService {
+  private collection = database.collection<ExerciseModel>("exercise");
 
-//   getExerciseById(id: string) {
-//     return this.collection.findOne({ _id: new ObjectId(id) });
-//   }
+  getExerciseById(exerciseId: ObjectId) {
+    return this.collection.findOne({ _id: exerciseId });
+  }
 
-//   async getExercisesByWorkout(workoutId: string) {
-//     return (await this.collection.find({ workoutId }).toArray()) as any;
-//   }
+  getExercisesByWorkoutId(workoutId: ObjectId) {
+    return this.collection.find({ workoutId }).toArray();
+  }
 
-//   async createExercise({ name, sets, reps, workoutId }: CreateExerciseModel) {
-//     const { insertedId } = await this.collection.insertOne({
-//       name,
-//       sets,
-//       reps,
-//       workoutId,
-//     });
+  async createExercise({ name, sets, reps, workoutId }: CreateExerciseModel) {
+    const { insertedId } = await this.collection.insertOne({
+      name,
+      sets,
+      reps,
+      workoutId,
+    });
 
-//     return this.collection.findOne({ _id: insertedId });
-//   }
+    return this.collection.findOne({ _id: insertedId });
+  }
 
-//   async deleteExercise(exerciseId: string) {
-//     const exercise = await this.getExerciseById(exerciseId);
+  //   async deleteExercise(exerciseId: string) {
+  //     const exercise = await this.getExerciseById(exerciseId);
 
-//     await this.collection.deleteOne({ _id: new ObjectId(exerciseId) });
+  //     await this.collection.deleteOne({ _id: new ObjectId(exerciseId) });
 
-//     return exercise;
-//   }
-// }
+  //     return exercise;
+  //   }
+}

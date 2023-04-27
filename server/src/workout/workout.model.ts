@@ -1,16 +1,17 @@
+import { CreateExerciseModel, ExerciseModel } from "../exercise/exercise.model";
+
 export interface WorkoutModel {
-  id: string;
   name: string;
-  duration: number;
-  // exercises: any[];
-  // workoutId: string;
+  duration: string;
+  userId: string;
+  exercises?: ExerciseModel[];
 }
 
 export interface CreateWorkoutModel {
   name: string;
   duration: string;
-  userId: number;
-  // exercises: any[]
+  userId: string;
+  exercises: CreateExerciseModel[];
 }
 
 export interface UpdateWorkoutModel {

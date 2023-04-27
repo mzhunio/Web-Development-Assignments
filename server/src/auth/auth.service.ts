@@ -1,37 +1,39 @@
-import { UserModel } from "../user/user.model";
-import { database } from "../models/mongo";
-import { LoginModel } from "./auth.model";
 import { ObjectId } from "mongodb";
+import { database } from "../models/mongo";
+import { UserModel } from "../user/user.model";
+import { UserService } from "../user/user.service";
 
 export class AuthService {
-  private collection = database.collection("user");
+  private collection = database.collection<UserModel>("user");
+  private userService = new UserService();
 
-  login(loginModel: LoginModel): Promise<UserModel> {
-    return this.findUserByUserNameAndPassword(loginModel);
-  }
-
-  async updateLastActive(userId: number) {
-    const lastActive = new Date();
-
-    await this.collection.findOneAndUpdate(
-      { _id: new ObjectId(userId) },
-      lastActive.toISOString
+  async login(username: string, password: string) {
+    const user = await this.userService.getUserByUserNameAndPassword(
+      username,
+      password
     );
-  }
-
-  private async findUserByUserNameAndPassword({
-    username,
-    password,
-  }: LoginModel): Promise<UserModel> {
-    const [users] = await this.collection
-      .find({ username, password })
-      .toArray();
-    const [user] = users as any;
 
     if (!user) {
       throw new Error("Could not authenticate user");
     }
 
-    return user;
+    await this.updateLastActive(user._id);
+
+    return await this.userService.getUserById(user._id);
+  }
+
+  async logout(userId: ObjectId) {
+    await this.updateLastActive(userId);
+
+    return await this.userService.getUserById(userId);
+  }
+
+  async updateLastActive(userId: ObjectId) {
+    const lastActive = new Date().toISOString();
+
+    await this.collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { lastActive } }
+    );
   }
 }

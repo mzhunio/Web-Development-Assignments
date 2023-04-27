@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
+import { authRouter } from "./auth/auth.router";
 import "./models/mongo";
 import { userRouter } from "./user/user.router";
 import { workoutRouter } from "./workout/workout.router";
@@ -14,7 +15,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Fitness API");
 });
 
-
+app.use(authRouter);
 app.use(userRouter);
 app.use(workoutRouter);
 // app.use(exerciseRouter);

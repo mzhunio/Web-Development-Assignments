@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { AuthService } from "@/service/AuthService";
 import router, { routes } from "@/router";
+import { AuthService } from "@/service/AuthService";
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
 import { isUserLoggedIn, user } from "../state/user";
@@ -12,8 +12,8 @@ function toggleMenu() {
   console.log({ isMenuActive });
 }
 
-function onLogout() {
-  AuthService.logout(user.value!.id);
+async function onLogout() {
+  await AuthService.logout(user.value!._id);
   router.push("/");
 }
 </script>

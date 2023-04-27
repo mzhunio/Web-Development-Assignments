@@ -1,12 +1,8 @@
-<script setup lang="ts">
-import { onDeleteWorkout } from "@/state/modal";
-import { friendsActivityWorkouts, workout } from "@/state/workout";
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <!-- list of workouts -->
-  <div class="box mt-5">
+  <!-- <div class="box mt-5">
     <article class="media" v-for="user in friendsActivityWorkouts">
       <div class="media-left">
         <figure class="image is-64x64">
@@ -66,7 +62,7 @@ import { friendsActivityWorkouts, workout } from "@/state/workout";
         <button class="delete"></button>
       </div>
     </article>
-  </div>
+  </div> -->
 
   <!-- <div class="columns is-justify-content-center mt-5">
     <div class="column is-half-tablet is-one-quarter">

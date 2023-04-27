@@ -1,16 +1,18 @@
-// export interface WorkoutModel {
-//   id: number;
-//   name: string;
-//   duration: number;
-//   userId: number;
-// }
+import { ObjectId } from "mongodb";
 
-// export interface CreateExerciseModel {
-//   name: string;
-//   sets: number;
-//   reps: number;
-//   workoutId: string;
-// }
+export interface ExerciseModel {
+  workoutId: ObjectId;
+  name: string;
+  sets: number;
+  reps: number;
+}
+
+export interface CreateExerciseModel {
+  workoutId: ObjectId;
+  name: string;
+  sets: number;
+  reps: number;
+}
 
 // export interface UpdateWorkoutModel {
 //   name?: string;

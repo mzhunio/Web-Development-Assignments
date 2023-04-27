@@ -36,7 +36,7 @@ getUsers();
             <tbody v-for="user in users">
               <tr>
                 <th>
-                  <abbr title="id">{{ user.id }}</abbr>
+                  <abbr title="id">{{ user._id }}</abbr>
                 </th>
                 <th>
                   <abbr title="username">{{ user.username }}</abbr>

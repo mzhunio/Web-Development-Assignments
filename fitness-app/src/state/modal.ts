@@ -1,5 +1,12 @@
 import { workouts, workout, newExercise } from "@/state/workout";
+import axios from "axios";
 import { ref } from "vue";
+
+async function getAllWorkoutsByUserId(userId: string) {
+  const { data } = await axios.get(`http://localhost:3000/workout/${userId}`);
+
+  workouts.value = data;
+}
 
 export const shouldShowModal = ref(false);
 
@@ -24,8 +31,9 @@ export function onAddExercise() {
   workout.value.exercises.push({ ...newExercise.value });
 }
 
-export function onDeleteWorkout(workoutIndex: number) {
-  workouts.value.splice(workoutIndex, 1);
+export async function onDeleteWorkout(workoutId: string) {
+  const res = await axios.delete(`http://localhost:3000/workout/${workoutId}`);
+
 }
 
 export function onDeleteExercise(exerciseIndex: number) {
