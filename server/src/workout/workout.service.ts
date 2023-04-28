@@ -1,8 +1,7 @@
 import { ObjectId } from "mongodb";
-// import { ExerciseService } from "../exercise/exercise.service";
 import { ExerciseService } from "../exercise/exercise.service";
 import { database } from "../models/mongo";
-import { CreateWorkoutModel, WorkoutModel } from "./workout.model";
+import { CreateWorkoutModel, UpdateWorkoutModel, WorkoutModel } from "./workout.model";
 
 export class WorkoutService {
   collection = database.collection<WorkoutModel>("workout");
@@ -20,10 +19,10 @@ export class WorkoutService {
     return workouts;
   }
 
-  async getAllWorkoutsByUserId(userId: string) {
+  async getAllWorkoutsByUserId(userId: ObjectId) {
     const workouts = await this.collection
       .find({
-        userId,
+        _id: userId,
       })
       .toArray();
 
@@ -71,11 +70,11 @@ export class WorkoutService {
     return await this.getWorkoutById(insertedId);
   }
 
-  // async updateWorkout(id: ObjectId, changes: UpdateWorkoutModel) {
-  //   await this.collection.updateOne({ _id: id }, { $set: changes });
+  async updateWorkout(id: ObjectId, changes: UpdateWorkoutModel) {
+    await this.collection.updateOne({ _id: id }, { $set: changes });
 
-  //   return this.getAllWorkoutsByUserId(id);
-  // }
+    return this.getAllWorkoutsByUserId(id);
+  }
 
   async deleteWorkout(workoutId: ObjectId) {
     const workout = await this.getWorkoutById(workoutId);

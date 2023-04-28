@@ -14,7 +14,8 @@ export interface CreateExerciseModel {
   reps: number;
 }
 
-// export interface UpdateWorkoutModel {
-//   name?: string;
-//   duration?: string;
-// }
+export interface UpdateExerciseModel {
+  name?: string;
+  sets?: number;
+  reps?: number;
+}

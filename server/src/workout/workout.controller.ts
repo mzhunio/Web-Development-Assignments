@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
-import { CreateWorkoutModel } from "./workout.model";
+import { CreateWorkoutModel, UpdateWorkoutModel } from "./workout.model";
 import { WorkoutService } from "./workout.service";
 
 export class WorkoutController {
@@ -20,7 +20,7 @@ export class WorkoutController {
     const { userId } = req.params;
 
     try {
-      const workout = await this.workoutService.getAllWorkoutsByUserId(userId);
+      const workout = await this.workoutService.getAllWorkoutsByUserId(new ObjectId(userId));
       res.send(workout);
     } catch (err: any) {
       const message = err.message ?? `Cannot get workout with id ${userId}`;
@@ -46,22 +46,22 @@ export class WorkoutController {
     }
   }
 
-  // async updateWorkout(req: Request, res: Response) {
-  //   const { id } = req.params;
-  //   const changes = req.body as UpdateWorkoutModel;
+  async updateWorkout(req: Request, res: Response) {
+    const { id } = req.params;
+    const changes = req.body as UpdateWorkoutModel;
 
-  //   try {
-  //     const workout = await this.workoutService.updateWorkout(
-  //       new ObjectId(id),
-  //       changes
-  //     );
-  //     res.send(workout);
-  //   } catch (err: any) {
-  //     const message = err.message ?? `Cannot update workout with id ${id}`;
+    try {
+      const workout = await this.workoutService.updateWorkout(
+        new ObjectId(id),
+        changes
+      );
+      res.send(workout);
+    } catch (err: any) {
+      const message = err.message ?? `Cannot update workout with id ${id}`;
 
-  //     res.status(400).send({ message });
-  //   }
-  // }
+      res.status(400).send({ message });
+    }
+  }
 
   async deleteWorkout(req: Request, res: Response) {
     const { id } = req.params;
