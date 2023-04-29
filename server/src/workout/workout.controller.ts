@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
-import { CreateWorkoutModel, UpdateWorkoutModel } from "./workout.model";
+import { CreateWorkoutModel } from "./workout.model";
 import { WorkoutService } from "./workout.service";
 
 export class WorkoutController {
@@ -42,23 +42,6 @@ export class WorkoutController {
       res.send(workout);
     } catch (err: any) {
       const message = err.message ?? `Cannot create workout`;
-      res.status(400).send({ message });
-    }
-  }
-
-  async updateWorkout(req: Request, res: Response) {
-    const { id } = req.params;
-    const changes = req.body as UpdateWorkoutModel;
-
-    try {
-      const workout = await this.workoutService.updateWorkout(
-        new ObjectId(id),
-        changes
-      );
-      res.send(workout);
-    } catch (err: any) {
-      const message = err.message ?? `Cannot update workout with id ${id}`;
-
       res.status(400).send({ message });
     }
   }
