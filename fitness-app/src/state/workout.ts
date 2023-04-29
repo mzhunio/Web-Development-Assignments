@@ -1,3 +1,4 @@
+import type { User } from "@/models/UserModel";
 import { ref } from "vue";
 // import workouts from "../data/workouts.json";
 
@@ -7,6 +8,7 @@ export interface Workout {
   duration: string;
   userId: string;
   exercises: Exercise[];
+  user?: User;
 }
 
 export interface Exercise {
