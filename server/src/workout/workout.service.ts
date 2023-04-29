@@ -40,9 +40,18 @@ export class WorkoutService {
   }
 
   async getWorkoutById(workoutId: ObjectId) {
-    return await this.collection.findOne({
+    const workout = await this.collection.findOne({
       _id: workoutId,
     });
+
+    workout!.user = await this.userService.getUserById(
+      new ObjectId(workout!.userId)
+    );
+    workout!.exercises = await this.exerciseService.getExercisesByWorkoutId(
+      workout!._id
+    );
+
+    return workout;
   }
 
   async getMyWorkouts(userId: string) {
@@ -74,14 +83,12 @@ export class WorkoutService {
     return await this.getWorkoutById(insertedId);
   }
 
-  // async updateWorkout(id: ObjectId, changes: UpdateWorkoutModel) {
-  //   await this.collection.updateOne({ _id: id }, { $set: changes });
-
-  //   return this.getAllWorkoutsByUserId(id);
-  // }
-
   async deleteWorkout(workoutId: ObjectId) {
     const workout = await this.getWorkoutById(workoutId);
+
+    for (const exercise of workout!.exercises) {
+      await this.exerciseService.deleteExercise(exercise._id);
+    }
 
     await this.collection.deleteOne({ _id: workoutId });
 

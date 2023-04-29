@@ -19,4 +19,13 @@ export class ExerciseService {
 
     return this.collection.findOne({ _id: insertedId });
   }
+
+
+  async deleteExercise(exerciseId: string) {
+    const exercise = await this.collection.findOne({ _id: new ObjectId(exerciseId) });
+
+    await this.collection.deleteOne({ _id: new ObjectId(exerciseId) });
+
+    return exercise;
+  }
 }

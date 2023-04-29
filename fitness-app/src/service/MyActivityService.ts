@@ -8,15 +8,15 @@ export const workouts = ref<Workout[]>([]);
 export const workout = ref<Workout>({
   _id: "",
   userId: "",
-  name: "Leg Workout",
-  duration: "30 mins",
+  name: "",
+  duration: "",
   exercises: [],
 });
 
 export const newExercise = ref<Exercise>({
-  name: "Arm",
-  sets: 4,
-  reps: 15,
+  name: "",
+  sets: "",
+  reps: "",
 });
 
 export const shouldShowModal = ref(false);
