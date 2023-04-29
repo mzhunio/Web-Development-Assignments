@@ -25,6 +25,25 @@ async function onLogout() {
         <a class="navbar-item" href="./">
           <i class="fa-solid fa-fire 2em"></i>
         </a>
+
+        <router-link v-if="isUserLoggedIn" to="/myActivity" class="navbar-item">
+          <span class="icon">
+            <i class="fas fa-running"></i>
+          </span>
+          <span>My Activity</span>
+        </router-link>
+
+        <router-link
+          v-if="isUserLoggedIn"
+          to="/friendsActivity"
+          class="navbar-item"
+        >
+          <span class="icon">
+            <i class="fas fa-people-group"></i>
+          </span>
+          <span>Friends Activity</span>
+        </router-link>
+
         <div
           class="navbar-burger"
           :class="{ 'is-active': isMenuActive }"
@@ -38,28 +57,6 @@ async function onLogout() {
 
       <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
         <div class="navbar-start">
-          <router-link
-            v-if="isUserLoggedIn"
-            to="/myActivity"
-            class="navbar-item"
-          >
-            <span class="icon">
-              <i class="fas fa-running"></i>
-            </span>
-            <span>My Activity</span>
-          </router-link>
-
-          <router-link
-            v-if="isUserLoggedIn"
-            to="/friendsActivity"
-            class="navbar-item"
-          >
-            <span class="icon">
-              <i class="fas fa-people-group"></i>
-            </span>
-            <span>Friends Activity</span>
-          </router-link>
-
           <router-link to="/search" class="navbar-item">
             <span class="icon">
               <i class="fas fa-search"></i>

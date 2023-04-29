@@ -20,15 +20,16 @@ getUsers();
           Add User
         </button>
       </div>
-      <div class="column">
+      <div class="column is-full">
         <div class="box">
-          <table class="table">
+          <table class="table is-bordered is-stripped is-narrow is-hoverable is-fullwidth">
             <thead>
               <tr>
                 <th><abbr title="id">Id</abbr></th>
                 <th><abbr title="username">Username</abbr></th>
                 <th><abbr title="email">Email</abbr></th>
                 <th><abbr title="isAdmin">Is Admin</abbr></th>
+                <th><abbr title="lastActive">Last Active</abbr></th>
                 <th><abbr title="box"></abbr></th>
               </tr>
             </thead>
@@ -36,19 +37,19 @@ getUsers();
             <tbody v-for="user in users">
               <tr>
                 <th>
-                  <abbr title="id">{{ user._id }}</abbr>
+                  <abbr text="id">{{ user._id }}</abbr>
                 </th>
                 <th>
-                  <abbr title="username">{{ user.username }}</abbr>
+                  <abbr text="username">{{ user.username }}</abbr>
                 </th>
                 <th>
-                  <abbr title="email">{{ user.email }}</abbr>
+                  <abbr text="email">{{ user.email }}</abbr>
                 </th>
                 <th>
-                  <abbr title="isAdmin">{{ user.isAdmin }}</abbr>
+                  <abbr text="isAdmin">{{ user.isAdmin }}</abbr>
                 </th>
                 <th>
-                  <abbr title="lastActive">{{ formatDistanceToNow(new Date(user.lastActive), { includeSeconds: true, addSuffix: true}) }}</abbr>
+                  <abbr text="lastActive">{{ formatDistanceToNow(new Date(user.lastActive), { includeSeconds: true, addSuffix: true}) }}</abbr>
                 </th>
                 <th>
                   <abbr title="Played">

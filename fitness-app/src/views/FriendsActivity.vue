@@ -4,7 +4,7 @@ import Modal from "../components/Modal.vue";
 </script>
 
 <template>
-  <div class="myActivity">
+  <div class="friendsActivity">
     <div class="container">
       <div class="columns is-justify-content-center mt-3">
         <div class="column is-half-tablet is-two-thirds">
