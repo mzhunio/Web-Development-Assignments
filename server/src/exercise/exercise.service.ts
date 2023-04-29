@@ -1,6 +1,11 @@
 import { ObjectId } from "mongodb";
+import { WorkoutService } from "../workout/workout.service";
 import { database } from "../models/mongo";
-import { CreateExerciseModel, ExerciseModel } from "./exercise.model";
+import {
+  CreateExerciseModel,
+  ExerciseModel,
+  UpdateExerciseModel,
+} from "./exercise.model";
 
 export class ExerciseService {
   private collection = database.collection<ExerciseModel>("exercise");
@@ -11,6 +16,10 @@ export class ExerciseService {
 
   getExercisesByWorkoutId(workoutId: ObjectId) {
     return this.collection.find({ workoutId }).toArray();
+  }
+
+  async getAllExercises() {
+    return this.collection.find().toArray();
   }
 
   async createExercise({ name, sets, reps, workoutId }: CreateExerciseModel) {
@@ -24,11 +33,17 @@ export class ExerciseService {
     return this.collection.findOne({ _id: insertedId });
   }
 
-  //   async deleteExercise(exerciseId: string) {
-  //     const exercise = await this.getExerciseById(exerciseId);
+  // async updateExercise(id: ObjectId, changes: UpdateExerciseModel) {
+  //   await this.collection.updateOne({ _id: id }, { $set: changes });
 
-  //     await this.collection.deleteOne({ _id: new ObjectId(exerciseId) });
+  //   return this.getAllExercisesByUserId(id);
+  // }
 
-  //     return exercise;
-  //   }
+  async deleteExercise(exerciseId: ObjectId) {
+    const exercise = await this.getExerciseById(exerciseId);
+
+    await this.collection.deleteOne({ _id: exerciseId });
+
+    return exercise;
+  }
 }

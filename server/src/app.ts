@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
 import { authRouter } from "./auth/auth.router";
+import { exerciseRouter } from "./exercise/exercise.router";
 import "./models/mongo";
 import { userRouter } from "./user/user.router";
 import { workoutRouter } from "./workout/workout.router";
@@ -19,7 +20,7 @@ app.get("/", (req, res) => {
 app.use(authRouter);
 app.use(userRouter);
 app.use(workoutRouter);
-// app.use(exerciseRouter);
+app.use(exerciseRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`✅ Server running on PORT ${port}`));

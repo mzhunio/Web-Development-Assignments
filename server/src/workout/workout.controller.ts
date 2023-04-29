@@ -20,7 +20,7 @@ export class WorkoutController {
     const { userId } = req.params;
 
     try {
-      const workout = await this.workoutService.getAllWorkoutsByUserId(new ObjectId(userId));
+      const workout = await this.workoutService.getAllWorkoutsByUserId(userId);
       res.send(workout);
     } catch (err: any) {
       const message = err.message ?? `Cannot get workout with id ${userId}`;

@@ -1,73 +1,82 @@
-// import { Request, Response } from "express";
-// import { CreateExerciseModel, UpdateWorkoutModel } from "./exercise.model";
-// import { ExerciseService } from "./exercise.service";
+import { Request, Response } from "express";
+import { CreateExerciseModel, UpdateExerciseModel } from "./exercise.model";
+import { ExerciseService } from "./exercise.service";
+import { ObjectId } from "mongodb";
 
-// export class ExerciseController {
-//   private workoutService = new ExerciseService();
+export class ExerciseController {
+  private exerciseService = new ExerciseService();
 
-//   async getAllWorkouts(req: Request, res: Response) {
-//     try {
-//       const workouts = await this.workoutService.getAllExercises();
-//       res.send(workouts);
-//     } catch (err: any) {
-//       const message = err.message ?? "Cannot fetch all workouts";
-//       res.status(400).send({ message });
-//     }
-//   }
+  async getAllExercises(req: Request, res: Response) {
+    try {
+      const exercises = await this.exerciseService.getAllExercises();
+      res.send(exercises);
+    } catch (err: any) {
+      const message = err.message ?? "Cannot fetch all exercises";
+      res.status(400).send({ message });
+    }
+  }
 
-//   async getWorkout(req: Request, res: Response) {
-//     const { id } = req.params;
+  async getExercise(req: Request, res: Response) {
+    const { id } = req.params;
 
-//     try {
-//       const workout = await this.workoutService.getWorkoutById(id);
-//       res.send(workout);
-//     } catch (err: any) {
-//       const message = err.message ?? "Cannot get workout with is ${id}";
-//       res.status(400).send({ message });
-//     }
-//   }
+    try {
+      const exercise = await this.exerciseService.getExerciseById(
+        new ObjectId(id)
+      );
+      res.send(exercise);
+    } catch (err: any) {
+      const message = err.message ?? "Cannot get exercise with is ${id}";
+      res.status(400).send({ message });
+    }
+  }
 
-//   async createWorkout(req: Request, res: Response) {
-//     const { name, sets: duration, userId } = req.body as CreateExerciseModel;
+  async createExercise(req: Request, res: Response) {
+    const { name, sets, reps, workoutId } = req.body as CreateExerciseModel;
 
-//     try {
-//       const workout = await this.workoutService.createExercise({
-//         name,
-//         sets: duration,
-//         userId,
-//       });
-//       res.send(workout);
-//     } catch (err: any) {
-//       const message = err.message ?? `Cannot create workout`;
-//       res.status(400).send({ message });
-//     }
-//   }
+    try {
+      const exercise = await this.exerciseService.createExercise({
+        name,
+        sets,
+        reps,
+        workoutId,
+      });
+      res.send(exercise);
+    } catch (err: any) {
+      const message = err.message ?? `Cannot create exercise`;
+      res.status(400).send({ message });
+    }
+  }
 
-//   async updateWorkout(req: Request, res: Response) {
-//     const { id } = req.params;
-//     const changes = req.body as UpdateWorkoutModel;
+  // async updateExercise(req: Request, res: Response) {
+  //   const { id } = req.params;
+  //   const changes = req.body as UpdateExerciseModel;
 
-//     try {
-//       const workout = await this.workoutService.updateWorkout(id, changes);
-//       res.send(workout);
-//     } catch (err: any) {
-//       const message = err.message ?? `Cannot update workout with id ${id}`;
+  //   try {
+  //     const exercise = await this.exerciseService.updateExercise(
+  //       new ObjectId(id),
+  //       changes
+  //     );
+  //     res.send(exercise);
+  //   } catch (err: any) {
+  //     const message = err.message ?? `Cannot update exercise with id ${id}`;
 
-//       res.status(400).send({ message });
-//     }
-//   }
+  //     res.status(400).send({ message });
+  //   }
+  // }
 
-//   async deleteWorkout(req: Request, res: Response) {
-//     const { id } = req.params;
-//     await this.workoutService.getWorkoutById(id);
+  async deleteWorkout(req: Request, res: Response) {
+    const { id } = req.params;
+    await this.exerciseService.getExerciseById(new ObjectId(id));
 
-//     try {
-//       const workout = await this.workoutService.deleteExercise(id);
-//       res.send(workout);
-//     } catch (err: any) {
-//       const message = err.message ?? `Cannot delete workout with id ${id}`;
+    try {
+      const exercise = await this.exerciseService.deleteExercise(
+        new ObjectId(id)
+      );
+      res.send(exercise);
+    } catch (err: any) {
+      const message = err.message ?? `Cannot delete exercise with id ${id}`;
 
-//       res.status(400).send({ message });
-//     }
-//   }
-// }
+      res.status(400).send({ message });
+    }
+  }
+}

@@ -15,6 +15,7 @@ export interface CreateExerciseModel {
 }
 
 export interface UpdateExerciseModel {
+  workoutId: ObjectId;
   name?: string;
   sets?: number;
   reps?: number;
