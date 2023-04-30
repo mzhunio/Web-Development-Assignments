@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { getAllUsers } from "@/service/UserService";
-import { users } from "../state/user";
+import { deleteUser, reloadUsers } from "@/service/UserService";
+import { parseISO } from "date-fns";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { users } from "../state/user";
 
-async function getUsers() {
-  const allUsers = await getAllUsers();
+reloadUsers();
 
-  users.value = allUsers;
+async function onDeleteUserClicked(userId: string) {
+  await deleteUser(userId);
+  await reloadUsers();
 }
-
-getUsers();
 </script>
 
 <template>
@@ -22,7 +22,9 @@ getUsers();
       </div>
       <div class="column is-full">
         <div class="box">
-          <table class="table is-bordered is-stripped is-narrow is-hoverable is-fullwidth">
+          <table
+            class="table is-bordered is-stripped is-narrow is-hoverable is-fullwidth"
+          >
             <thead>
               <tr>
                 <th><abbr title="id">Id</abbr></th>
@@ -49,14 +51,19 @@ getUsers();
                   <abbr text="isAdmin">{{ user.isAdmin }}</abbr>
                 </th>
                 <th>
-                  <abbr text="lastActive">{{ formatDistanceToNow(new Date(user.lastActive), { includeSeconds: true, addSuffix: true}) }}</abbr>
+                  <abbr text="lastActive">{{
+                    formatDistanceToNow(parseISO(user.lastActive))
+                  }}</abbr>
                 </th>
                 <th>
                   <abbr title="Played">
                     <button class="button">
                       <i class="fas fa-edit"></i>
                     </button>
-                    <button class="button">
+                    <button
+                      class="button"
+                      @click="onDeleteUserClicked(user._id)"
+                    >
                       <i class="fas fa-trash"></i>
                     </button>
                   </abbr>
