@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { deleteUser, reloadUsers } from "@/service/UserService";
+import CreateUserModal from "@/components/CreateUserModal.vue";
+import UpdateUserModal from "@/components/UpdateUserModal.vue";
+import type { User } from "@/models/UserModel";
+import { currentUpdatingUser, deleteUser, reloadUsers, showCreateUserModal, showUpdateUserModal } from "@/service/UserService";
 import { parseISO } from "date-fns";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { users } from "../state/user";
@@ -10,16 +13,30 @@ async function onDeleteUserClicked(userId: string) {
   await deleteUser(userId);
   await reloadUsers();
 }
+
+function onCreateUserClicked() {
+  showCreateUserModal.value = true;
+}
+
+function onUpdateUserClicked(user: User) {
+  currentUpdatingUser.value = user;
+  showUpdateUserModal.value = true;
+}
 </script>
 
 <template>
   <div class="user">
     <div class="container is-max-desktop">
       <div class="buttons mt-5">
-        <button class="button fa-light fa-plus is-info is-light">
+        <button
+          class="button fa-light fa-plus is-info is-light"
+          @click="onCreateUserClicked"
+        >
           Add User
         </button>
       </div>
+      <CreateUserModal />
+      <UpdateUserModal />
       <div class="column is-full">
         <div class="box">
           <table
@@ -57,7 +74,7 @@ async function onDeleteUserClicked(userId: string) {
                 </th>
                 <th>
                   <abbr title="Played">
-                    <button class="button">
+                    <button class="button" @click="onUpdateUserClicked(user)">
                       <i class="fas fa-edit"></i>
                     </button>
                     <button

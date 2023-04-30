@@ -1,4 +1,3 @@
-import Modal from "@/components/Modal.vue";
 import { updateCurrentUser } from "@/service/AuthService";
 import { LocalStorage } from "@/service/LocalStorageServices";
 import { user } from "@/state/user";
@@ -65,11 +64,6 @@ const router = createRouter({
       path: "/register",
       name: "register",
       component: Register,
-    },
-    {
-      path: "/modal",
-      name: "modal",
-      component: Modal,
     },
   ],
 });

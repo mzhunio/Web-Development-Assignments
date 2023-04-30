@@ -4,8 +4,8 @@ import type {
   User,
 } from "@/models/UserModel";
 import { users } from "@/state/user";
-import type { Workout } from "@/state/workout";
 import axios from "axios";
+import { ref } from "vue";
 
 const API_URL = "http://localhost:3000";
 
@@ -18,6 +18,11 @@ const API_URL = "http://localhost:3000";
 //   const { data } = await axios.get<User[]>(API_URL + "/workouts/" + userId);
 //   return data;
 // }
+
+export const currentUpdatingUser = ref<User | null>(null);
+
+export const showCreateUserModal = ref(false);
+export const showUpdateUserModal = ref(false);
 
 export async function getUser(id: number): Promise<User[]> {
   const { data } = await axios.get<User[]>(`${API_URL}/user/${id}`);

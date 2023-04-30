@@ -22,9 +22,9 @@ async function onLogout() {
   <nav class="navbar is-primary">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item" href="./">
+        <router-link class="navbar-item" to="/">
           <i class="fa-solid fa-fire 2em"></i>
-        </a>
+        </router-link>
 
         <router-link v-if="isUserLoggedIn" to="/myActivity" class="navbar-item">
           <span class="icon">
