@@ -75,7 +75,9 @@ async function onLogout() {
           >
             <a class="navbar-link"> Admin </a>
             <div class="navbar-dropdown">
-              <a class="navbar-item" @click="routes.goToUserPage()"> Users </a>
+              <router-link to="/user" class="navbar-item">
+                Users
+              </router-link>
             </div>
           </div>
         </div>

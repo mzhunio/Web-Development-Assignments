@@ -88,9 +88,6 @@ function secureRoute(
 }
 
 export const routes = {
-  goToUserPage() {
-    return router.push("/user");
-  },
   goToHomePage() {
     return router.push("/");
   },
