@@ -12,6 +12,7 @@ export interface User {
   password: string;
   isAdmin: boolean;
   lastActive: string;
+  token: string;
 }
 
 export interface UpdateUserModel {

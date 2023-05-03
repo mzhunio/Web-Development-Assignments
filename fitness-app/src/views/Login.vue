@@ -6,7 +6,48 @@ import {
   getPasswordErrors,
   getUsernameErrors,
 } from "@/service/AuthService";
+import axios from "axios";
 import { computed, ref } from "vue";
+
+function loadScript(url: string, id: string) {
+  return new Promise((resolve, reject) => {
+    if (document.getElementById(id)) return resolve(true);
+
+    const script = document.createElement("script");
+    script.src = url;
+    script.id = id;
+    script.onload = () => resolve(true);
+    script.onerror = () => reject(false);
+    document.body.appendChild(script);
+  });
+}
+
+async function googleLogin() {
+  await loadScript("https://accounts.google.com/gsi/client", "google-login");
+  //await loadScript('https://apis.google.com/js/platform.js', 'gapi');
+
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id:
+      "604624309641-0u1q7muvq5846qk8ir64qa5b8m5e3597.apps.googleusercontent.com",
+    scope:
+      "https://www.googleapis.com/auth/calendar.readonly \
+                  https://www.googleapis.com/auth/contacts.readonly",
+    callback: async (tokenResponse) => {
+      console.log(tokenResponse);
+
+      const me = await axios.get(
+        "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses",
+        {
+          headers: {
+            Authorization: "Bearer " + tokenResponse.access_token,
+          },
+        }
+      );
+      console.log(me);
+    },
+  });
+  client.requestAccessToken();
+}
 
 const username = ref("mzhunio");
 const password = ref("12345");
@@ -37,6 +78,10 @@ async function onLoginClicked() {
         >
           <div class="card">
             <div class="card-content">
+              <button class="button is-primary" @click="googleLogin">
+                Login With Google
+              </button>
+
               <div class="title mt-2 has-text-centered">Sign In</div>
 
               <!-- USERNAME -->

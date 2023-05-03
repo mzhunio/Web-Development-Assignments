@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { workouts } from "@/service/MyActivityService";
+import { user } from "@/state/user";
 import axios from "axios";
 
 async function reloadWorkouts() {
-  const { data } = await axios.get(`http://localhost:3000/workout`);
+  const { data } = await axios.get(`http://localhost:3000/workout`, {
+    headers: {
+      Authorization: "Bearer " + user.value.token,
+    },
+  });
   workouts.value = data;
 }
 
