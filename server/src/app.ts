@@ -1,9 +1,11 @@
-require("dotenv").config();
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
-import { authRouter } from "./auth/auth.router";
+
+import "./dotenv";
 import "./models/mongo";
+
+import { authRouter } from "./auth/auth.router";
 import { userRouter } from "./user/user.router";
 import { workoutRouter } from "./workout/workout.router";
 
