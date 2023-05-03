@@ -1,19 +1,23 @@
 import { ObjectId } from "mongodb";
 import { database } from "../models/mongo";
-import { CreateUserModel, UpdateUserModel } from "./user.model";
+import { CreateUserModel, UpdateUserModel, UserModel } from "./user.model";
 
 export class UserService {
-  collection = database.collection("user");
+  collection = database.collection<UserModel>("user");
 
   getAllUsers() {
     return this.collection.find().toArray();
   }
 
-  getUserById(id: string) {
-    return this.collection.findOne({ _id: new ObjectId(id) });
+  getUserById(id: ObjectId) {
+    return this.collection.findOne({ _id: id });
   }
 
-  async getUserWorkouts(userId: string) {
+  async getUserByUserNameAndPassword(username: string, password: string) {
+    return await this.collection.findOne({ username, password });
+  }
+
+  async getUserWorkouts(userId: ObjectId) {
     const user: any = await this.getUserById(userId);
 
     user.workouts = this.collection.find({ userId }).toArray();
@@ -21,7 +25,13 @@ export class UserService {
     return user;
   }
 
-  async createUser({ username, email, password, isAdmin, lastActive }: CreateUserModel) {
+  async createUser({
+    username,
+    email,
+    password,
+    isAdmin,
+    lastActive,
+  }: CreateUserModel) {
     const isUserByUsernameFound = await this.collection.findOne({ username });
     const isUserByEmailFound = await this.collection.findOne({ email });
     if (isUserByEmailFound || isUserByUsernameFound) {
@@ -39,19 +49,16 @@ export class UserService {
     return await this.collection.findOne({ _id: insertedId });
   }
 
-  async updateUser(id: string, changes: UpdateUserModel) {
-    await this.collection.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: changes }
-    );
+  async updateUser(id: ObjectId, changes: UpdateUserModel) {
+    await this.collection.updateOne({ _id: id }, { $set: changes });
 
     return this.getUserById(id);
   }
 
-  async deleteUser(id: string) {
+  async deleteUser(id: ObjectId) {
     const user = this.getUserById(id);
 
-    await this.collection.deleteOne({ _id: new ObjectId(id) });
+    await this.collection.deleteOne({ _id: id });
 
     return user;
   }

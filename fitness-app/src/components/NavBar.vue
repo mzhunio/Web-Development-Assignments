@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { AuthService } from "@/service/AuthService";
 import router, { routes } from "@/router";
+import { AuthService } from "@/service/AuthService";
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
 import { isUserLoggedIn, user } from "../state/user";
@@ -12,8 +12,8 @@ function toggleMenu() {
   console.log({ isMenuActive });
 }
 
-function onLogout() {
-  AuthService.logout(user.value!.id);
+async function onLogout() {
+  await AuthService.logout(user.value!._id);
   router.push("/");
 }
 </script>
@@ -22,9 +22,28 @@ function onLogout() {
   <nav class="navbar is-primary">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item" href="./">
+        <router-link class="navbar-item" to="/">
           <i class="fa-solid fa-fire 2em"></i>
-        </a>
+        </router-link>
+
+        <router-link v-if="isUserLoggedIn" to="/myActivity" class="navbar-item">
+          <span class="icon">
+            <i class="fas fa-running"></i>
+          </span>
+          <span>My Activity</span>
+        </router-link>
+
+        <router-link
+          v-if="isUserLoggedIn"
+          to="/friendsActivity"
+          class="navbar-item"
+        >
+          <span class="icon">
+            <i class="fas fa-people-group"></i>
+          </span>
+          <span>Friends Activity</span>
+        </router-link>
+
         <div
           class="navbar-burger"
           :class="{ 'is-active': isMenuActive }"
@@ -38,28 +57,6 @@ function onLogout() {
 
       <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
         <div class="navbar-start">
-          <router-link
-            v-if="isUserLoggedIn"
-            to="/myActivity"
-            class="navbar-item"
-          >
-            <span class="icon">
-              <i class="fas fa-running"></i>
-            </span>
-            <span>My Activity</span>
-          </router-link>
-
-          <router-link
-            v-if="isUserLoggedIn"
-            to="/friendsActivity"
-            class="navbar-item"
-          >
-            <span class="icon">
-              <i class="fas fa-people-group"></i>
-            </span>
-            <span>Friends Activity</span>
-          </router-link>
-
           <router-link to="/search" class="navbar-item">
             <span class="icon">
               <i class="fas fa-search"></i>
@@ -73,7 +70,7 @@ function onLogout() {
           </router-link>
 
           <div
-            v-if="isUserLoggedIn"
+            v-if="isUserLoggedIn && !!user?.isAdmin"
             class="navbar-item has-dropdown is-hoverable"
           >
             <a class="navbar-link"> Admin </a>

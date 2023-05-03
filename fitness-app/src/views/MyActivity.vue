@@ -1,32 +1,10 @@
 <script setup lang="ts">
-import ListWorkouts from "../components/ListWorkouts.vue";
+import { onAddWorkoutClicked } from "@/service/MyActivityService";
 import Modal from "../components/Modal.vue";
-import { onAddWorkoutClicked } from "@/state/modal";
-
-// function delte(exreciseId:) {
-//   await ExerciseService.deleteExercise(exreciseId);
-
-//   thiss.getAllWorkouts();
-// }
+import WorkoutList from "../components/WorkoutList.vue";
 </script>
 
 <template>
-
-<!-- 
-
-  <div class="div" v-for="workout of workouts">
-    <div class="div"></div>
-    <div class="div"></div>
-    <div class="div" v-for="exercise in workout">
-      <div>{{ exerciseNmae }}</div>
-      <div></div>
-      <div></div>
-      <button @click="deleteExercise(exercise._id)">Delete</button>
-    </div>
-  </div> -->
-
-
-
   <div class="myActivity">
     <div class="container">
       <div class="columns is-justify-content-center mt-3">
@@ -42,8 +20,7 @@ import { onAddWorkoutClicked } from "@/state/modal";
           </button>
 
           <Modal />
-          <ListWorkouts />
-
+          <WorkoutList />
         </div>
       </div>
     </div>

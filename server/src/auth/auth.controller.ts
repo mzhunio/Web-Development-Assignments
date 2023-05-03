@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
+import { ObjectId } from "mongodb";
 import { CreateUserModel } from "../user/user.model";
 import { UserService } from "../user/user.service";
 import { LoginModel } from "./auth.model";
 import { AuthService } from "./auth.service";
-import { ObjectId } from "mongodb";
 
 export class AuthController {
   private authService = new AuthService();
@@ -32,9 +32,7 @@ export class AuthController {
     const { username, password } = req.body as LoginModel;
 
     try {
-      const user = await this.authService.login({ username, password });
-      await this.authService.updateLastActive(user.id);
-
+      const user = await this.authService.login(username, password);
       res.send(user);
     } catch (err: any) {
       const message = err.message ?? `Cannot authenticate user`;
@@ -43,11 +41,9 @@ export class AuthController {
   }
 
   async logout(req: Request, res: Response) {
-    const id = parseInt(req.params.id);
+    const { id } = req.params;
+    const user = this.authService.logout(new ObjectId(id));
 
-    await this.authService.updateLastActive(id);
-
-    const user = await this.userService.getUserById(id.toString()); //debug
     res.send(user);
   }
 }

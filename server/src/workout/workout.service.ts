@@ -1,52 +1,63 @@
 import { ObjectId } from "mongodb";
-// import { ExerciseService } from "../exercise/exercise.service";
+import { ExerciseService } from "../exercise/exercise.service";
 import { database } from "../models/mongo";
-import {
-  CreateWorkoutModel,
-  UpdateWorkoutModel,
-  WorkoutModel,
-} from "./workout.model";
+import { UserService } from "../user/user.service";
+import { CreateWorkoutModel, WorkoutModel } from "./workout.model";
 
 export class WorkoutService {
   collection = database.collection("workout");
-  // private exerciseService = new ExerciseService();
+  exerciseService = new ExerciseService();
+  userService = new UserService();
 
   async getAllWorkouts() {
-    const workouts = (await this.collection
-      .find()
-      .toArray()) as unknown as WorkoutModel[];
+    const workouts = await this.collection.find().toArray();
 
-    // for (const workout of workouts) {
-    //   workout.exercises = await this.exerciseService.getExercisesByWorkout(
-    //     workout._id
-    //   );
-    // }
+    for (const workout of workouts) {
+      workout.user = await this.userService.getUserById(
+        new ObjectId(workout.userId)
+      );
+      workout.exercises = await this.exerciseService.getExercisesByWorkoutId(
+        workout._id
+      );
+    }
 
     return workouts;
   }
 
-  async getWorkoutById(id: string) {
-    const workout = (await this.collection.findOne({
-      _id: new ObjectId(id),
-    })) as any;
-    // workout.exercises = await this.exerciseService.getExercisesByWorkout(
-    //   workout._id
-    // );
+  async getAllWorkoutsByUserId(userId: string) {
+    const workouts = await this.collection.find({ userId }).toArray();
+
+    for (const workout of workouts) {
+      workout.user = await this.userService.getUserById(
+        new ObjectId(workout.userId)
+      );
+      workout.exercises = await this.exerciseService.getExercisesByWorkoutId(
+        workout._id
+      );
+    }
+
+    return workouts;
+  }
+
+  async getWorkoutById(workoutId: ObjectId) {
+    const workout = await this.collection.findOne({
+      _id: workoutId,
+    });
+
+    workout!.user = await this.userService.getUserById(
+      new ObjectId(workout!.userId)
+    );
+    workout!.exercises = await this.exerciseService.getExercisesByWorkoutId(
+      workout!._id
+    );
 
     return workout;
   }
 
   async getMyWorkouts(userId: string) {
     const workouts = (await this.collection
-      .find({ userId })
+      .find({})
       .toArray()) as unknown as WorkoutModel[];
-
-    // for (const workout of workouts) {
-    //   workout.exercises = await this.exerciseService.getExercisesByWorkout(
-    //     workout._id
-    //   );
-    // }
-
     return workouts;
   }
 
@@ -54,37 +65,32 @@ export class WorkoutService {
     name,
     duration,
     userId,
-  }: // exercises,
-  CreateWorkoutModel) {
+    exercises,
+  }: CreateWorkoutModel) {
     const { insertedId } = await this.collection.insertOne({
       name,
       duration,
       userId,
     });
 
-    // for (const exercise of exercises) {
-    //   await this.exerciseService.createExercise({
-    //     ...exercise,
-    //     workoutId: insertedId,
-    //   });
-    // }
+    for (const exercise of exercises) {
+      await this.exerciseService.createExercise({
+        ...exercise,
+        workoutId: insertedId,
+      });
+    }
 
-    return await this.collection.findOne({ _id: insertedId });
+    return await this.getWorkoutById(insertedId);
   }
 
-  async updateWorkout(id: string, changes: UpdateWorkoutModel) {
-    await this.collection.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: changes }
-    );
+  async deleteWorkout(workoutId: ObjectId) {
+    const workout = await this.getWorkoutById(workoutId);
 
-    return this.getWorkoutById(id);
-  }
+    for (const exercise of workout!.exercises) {
+      await this.exerciseService.deleteExercise(exercise._id);
+    }
 
-  async deleteWorkout(id: string) {
-    const workout = await this.getWorkoutById(id);
-
-    await this.collection.deleteOne({ _id: new ObjectId(id) });
+    await this.collection.deleteOne({ _id: workoutId });
 
     return workout;
   }

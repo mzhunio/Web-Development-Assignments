@@ -1,13 +1,13 @@
-import type { CreateUserModel, UpdateUserModel, User } from "@/models/UserModel";
-import type { Workout } from "@/state/workout";
+import type {
+  CreateUserModel,
+  UpdateUserModel,
+  User,
+} from "@/models/UserModel";
+import { users } from "@/state/user";
 import axios from "axios";
+import { ref } from "vue";
 
 const API_URL = "http://localhost:3000";
-
-export async function getAllUsers(): Promise<User[]> {
-  const { data } = await axios.get<User[]>(API_URL + "/user");
-  return data;
-}
 
 // export async function getAllWorkouts(): Promise<User[]> {
 //   const { data } = await axios.get<User[]>(API_URL + "/workouts");
@@ -19,9 +19,19 @@ export async function getAllUsers(): Promise<User[]> {
 //   return data;
 // }
 
+export const currentUpdatingUser = ref<User | null>(null);
+
+export const showCreateUserModal = ref(false);
+export const showUpdateUserModal = ref(false);
+
 export async function getUser(id: number): Promise<User[]> {
   const { data } = await axios.get<User[]>(`${API_URL}/user/${id}`);
   return data;
+}
+
+export async function reloadUsers() {
+  const { data } = await axios.get(`http://localhost:3000/user`);
+  users.value = data;
 }
 
 export async function createUser(
@@ -32,7 +42,7 @@ export async function createUser(
 }
 
 export async function updateUser(
-  id: number,
+  id: string,
   updateUserModel: UpdateUserModel
 ): Promise<User> {
   const { data } = await axios.patch<User>(
@@ -42,11 +52,10 @@ export async function updateUser(
   return data;
 }
 
-export async function deleteUser(id: number): Promise<User> {
+export async function deleteUser(id: string): Promise<User> {
   const { data } = await axios.delete<User>(`${API_URL}/user/${id}`);
   return data;
 }
-
 interface CreateExerciseModel {
   name: string;
   sets: number;

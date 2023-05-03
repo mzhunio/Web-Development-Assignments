@@ -1,15 +1,25 @@
 <script setup lang="ts">
 import {
-  shouldShowModal,
-  onAddExercise,
   closeModal,
-  onSaveChangesClicked,
+  newExercise,
+  onAddExercise,
   onDeleteExercise,
-} from "@/state/modal";
+  reloadWorkouts,
+  shouldShowModal,
+  workout,
+} from "@/service/MyActivityService";
+import { user } from "@/state/user";
+import axios from "axios";
 
-import { workout, newExercise } from "@/state/workout";
+async function onSaveChangesClicked() {
+  await axios.post("http://localhost:3000/workout", {
+    ...workout.value,
+    userId: user.value!._id,
+  });
 
-
+  await reloadWorkouts(user.value!._id);
+  closeModal();
+}
 </script>
 
 <template>
@@ -28,7 +38,7 @@ import { workout, newExercise } from "@/state/workout";
                 class="input"
                 type="text"
                 placeholder="Text input"
-                v-model="workout.workoutName"
+                v-model="workout.name"
               />
             </div>
           </div>
@@ -38,7 +48,7 @@ import { workout, newExercise } from "@/state/workout";
             <div class="control">
               <input
                 class="input"
-                type="number"
+                type="text"
                 placeholder="30"
                 v-model="workout.duration"
               />
@@ -66,7 +76,7 @@ import { workout, newExercise } from "@/state/workout";
                     class="input"
                     type="text"
                     placeholder="Exercise Name"
-                    v-model="newExercise.exerciseName"
+                    v-model="newExercise.name"
                   />
                 </div>
                 <div class="column">
@@ -82,7 +92,7 @@ import { workout, newExercise } from "@/state/workout";
                     class="input"
                     type="number"
                     placeholder="Repetitions"
-                    v-model="newExercise.repetitions"
+                    v-model="newExercise.reps"
                   />
                 </div>
               </div>
@@ -101,12 +111,12 @@ import { workout, newExercise } from "@/state/workout";
               class="exercise-list"
               v-for="(newExercise, index) in workout.exercises"
             >
-              <div>{{ newExercise.exerciseName }}</div>
+              <div>{{ newExercise.name }}</div>
               <div class="has-text-centered">
                 {{ newExercise.sets }}
               </div>
               <div class="has-text-centered">
-                {{ newExercise.repetitions }}
+                {{ newExercise.reps }}
               </div>
               <div class="has-text-centered">
                 <button
@@ -144,21 +154,20 @@ import { workout, newExercise } from "@/state/workout";
 </template>
 
 <style scoped>
-  .exercise-title,
-  .exercise {
+.exercise-title,
+.exercise {
   display: grid;
   grid-template-columns: 3fr 1fr 1fr;
-  }
+}
 
-  .exercise-list {
-    display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr;
-  }
+.exercise-list {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
+}
 
 /* grid, flex */
 
-  .button {
-    width: 100%;
-  }
-  
+.button {
+  width: 100%;
+}
 </style>

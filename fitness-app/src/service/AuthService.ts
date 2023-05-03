@@ -20,7 +20,7 @@ export const AuthApi = {
     return data;
   },
 
-  async logout(userId: number) {
+  async logout(userId: string) {
     const { data } = await axios.post<User>(`${API_URL}/logout/${userId}`);
     return data;
   },
@@ -37,7 +37,7 @@ export const AuthService = {
     LocalStorage.setCurrentUser(user.value);
   },
 
-  async logout(userId: number) {
+  async logout(userId: string) {
     await AuthApi.logout(userId);
     user.value = null;
     LocalStorage.removeCurrentUser();

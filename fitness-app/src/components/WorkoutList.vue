@@ -1,13 +1,18 @@
 <script setup lang="ts">
+import {
+  deleteWorkout,
+  reloadWorkouts,
+  workouts,
+} from "@/service/MyActivityService";
 import { user } from "@/state/user";
-import { onDeleteWorkout } from "@/state/modal";
-import { workouts } from "@/state/workout";
+
+reloadWorkouts(user.value!._id);
 </script>
 
 <template>
   <!-- list of workouts -->
-  <div class="box mt-5">
-    <article class="media" v-for="(workout, workoutIndex) in workouts">
+  <div class="box mt-5" v-if="workouts.length > 0">
+    <article class="media" v-for="workout in workouts">
       <div class="media-left">
         <figure class="image is-64x64">
           <img
@@ -20,7 +25,8 @@ import { workouts } from "@/state/workout";
         <div class="content">
           <div class="level">
             <div class="level-left">
-              <strong>{{ workout.workoutName }}</strong> <small> {{ user?.username }}</small>
+              <strong>{{ workout.name }}</strong>
+              <small> {{ user?.username }}</small>
             </div>
             <div class="level-right">
               Duration ({{ workout.duration }} mins)
@@ -33,10 +39,10 @@ import { workouts } from "@/state/workout";
             <div class="has-text-centered">Reps</div>
           </div>
           <nav class="exercise" v-for="exercise in workout.exercises">
-            <div>{{ exercise.exerciseName }}</div>
+            <div>{{ exercise.name }}</div>
             <div class="has-text-centered">{{ exercise.sets }}</div>
             <div class="has-text-centered">
-              {{ exercise.repetitions }}
+              {{ exercise.reps }}
             </div>
           </nav>
         </div>
@@ -62,14 +68,13 @@ import { workouts } from "@/state/workout";
         </nav>
       </div>
       <div class="media-right">
-        <button class="delete" @click="onDeleteWorkout(workoutIndex)"></button>
+        <button class="delete" @click="deleteWorkout(workout._id)"></button>
       </div>
     </article>
   </div>
 </template>
 
 <style scoped>
-
 .exercise-title,
 .exercise {
   display: grid;
@@ -80,5 +85,4 @@ import { workouts } from "@/state/workout";
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr;
 }
-
 </style>
