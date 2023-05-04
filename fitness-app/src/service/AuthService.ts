@@ -16,7 +16,7 @@ export enum AuthError {
 
 export const AuthApi = {
   async login(loginModel: LoginModel): Promise<User> {
-    const { data } = await axios.post<User>(`${API_URL}/login/`, loginModel);
+    const { data } = await axios.post<User>(`${API_URL}/login`, loginModel);
     return data;
   },
 
