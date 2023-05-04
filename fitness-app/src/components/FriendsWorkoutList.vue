@@ -3,7 +3,9 @@ import { workouts } from "@/service/MyActivityService";
 import axios from "axios";
 
 async function reloadWorkouts() {
-  const { data } = await axios.get(`https://fitness-app-api-s9v9.onrender.com/workout`);
+  const { data } = await axios.get(
+    `https://fitness-app-api-s9v9.onrender.com/workout`
+  );
   workouts.value = data;
 }
 
@@ -14,20 +16,12 @@ reloadWorkouts();
   <!-- list of workouts -->
   <div class="box mt-5" v-if="workouts.length > 0">
     <article class="media" v-for="workout in workouts">
-      <div class="media-left">
-        <figure class="image is-64x64">
-          <img
-            src="https://bulma.io/images/placeholders/128x128.png"
-            alt="Image"
-          />
-        </figure>
-      </div>
       <div class="media-content">
         <div class="content">
           <div class="level">
             <div class="level-left">
               <strong>{{ workout.name }}</strong>
-              <small class="ml-1"> {{ workout.user?.username }}</small>
+              <small class="ml-1"> @{{ workout.user?.username }}</small>
             </div>
             <div class="level-right">
               Duration ({{ workout.duration }} mins)

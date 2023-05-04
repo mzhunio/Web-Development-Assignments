@@ -11,22 +11,18 @@ reloadWorkouts(user.value!._id);
 
 <template>
   <!-- list of workouts -->
-  <div class="box mt-5" v-if="workouts.length > 0">
+  <div
+    class="box mt-5"
+    v-if="workouts.length > 0"
+  >
     <article class="media" v-for="workout in workouts">
-      <div class="media-left">
-        <figure class="image is-64x64">
-          <img
-            src="https://bulma.io/images/placeholders/128x128.png"
-            alt="Image"
-          />
-        </figure>
-      </div>
       <div class="media-content">
         <div class="content">
           <div class="level">
             <div class="level-left">
               <strong>{{ workout.name }}</strong>
-              <small> {{ user?.username }}</small>
+              <small class="ml-1"> 
+                @{{ user?.username }}</small>
             </div>
             <div class="level-right">
               Duration ({{ workout.duration }} mins)

@@ -8,7 +8,7 @@ import {
 } from "@/service/AuthService";
 import { computed, ref } from "vue";
 
-const username = ref("mzhunio");
+const username = ref("admin");
 const password = ref("12345");
 
 const usernameErrors = computed(() => getUsernameErrors(username.value));
