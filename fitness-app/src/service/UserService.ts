@@ -36,7 +36,7 @@ export async function reloadUsers() {
 export async function createUser(
   createUserModel: CreateUserModel
 ): Promise<User> {
-  const { data } = await axios.post<User>(`${API_URL}/user/${createUserModel}`);
+  const { data } = await axios.post<User>(`${API_URL}/user`, createUserModel);
   return data;
 }
 
