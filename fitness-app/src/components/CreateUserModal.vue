@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import router from "@/router";
-import { closeModal, shouldShowModal } from "@/service/MyActivityService";
+import { API_URL } from "@/service/AuthService";
+import { closeModal } from "@/service/MyActivityService";
 import { reloadUsers, showCreateUserModal } from "@/service/UserService";
 import axios from "axios";
 import { ref } from "vue";
@@ -11,7 +12,7 @@ const password = ref("");
 const isAdmin = ref(false);
 
 async function onSaveChangesClicked() {
-  await axios.post("https://fitness-app-api-s9v9.onrender.com/user", {
+  await axios.post(`${API_URL}/user`, {
     username: username.value,
     email: email.value,
     password: password.value,

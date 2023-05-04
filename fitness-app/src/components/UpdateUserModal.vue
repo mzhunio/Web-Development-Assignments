@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { User } from "@/models/UserModel";
+import { API_URL } from "@/service/AuthService";
 import {
   currentUpdatingUser,
   reloadUsers,
@@ -11,7 +12,7 @@ async function onSaveChangesClicked() {
   const { _id, username, email, password, isAdmin } =
     currentUpdatingUser.value as User;
 
-  await axios.patch(`https://fitness-app-api-s9v9.onrender.com/user/${_id}`, {
+  await axios.patch(`${API_URL}/user/${_id}`, {
     username,
     email,
     password,

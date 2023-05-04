@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { API_URL } from "@/service/AuthService";
 import {
   closeModal,
   newExercise,
@@ -12,7 +13,7 @@ import { user } from "@/state/user";
 import axios from "axios";
 
 async function onSaveChangesClicked() {
-  await axios.post("https://fitness-app-api-s9v9.onrender.com/workout", {
+  await axios.post(`${API_URL}/workout`, {
     ...workout.value,
     userId: user.value!._id,
   });

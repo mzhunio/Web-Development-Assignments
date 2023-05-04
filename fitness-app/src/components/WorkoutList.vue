@@ -26,7 +26,7 @@ reloadWorkouts(user.value!._id);
           <div class="level">
             <div class="level-left">
               <strong>{{ workout.name }}</strong>
-              <small> {{ user?.username }}</small>
+              <small>{{ user?.username }}</small>
             </div>
             <div class="level-right">
               Duration ({{ workout.duration }} mins)

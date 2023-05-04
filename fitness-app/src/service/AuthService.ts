@@ -5,7 +5,7 @@ import axios from "axios";
 import { LocalStorage } from "./LocalStorageServices";
 import { createUser } from "./UserService";
 
-const API_URL = "https://fitness-app-api-s9v9.onrender.com";
+export const API_URL = import.meta.env.Vite_API_URL;
 
 export enum AuthError {
   InvalidEmail = "Invalid email: Please enter valid email",
@@ -16,7 +16,7 @@ export enum AuthError {
 
 export const AuthApi = {
   async login(loginModel: LoginModel): Promise<User> {
-    const { data } = await axios.post<User>(API_URL + "/login", loginModel);
+    const { data } = await axios.post<User>(`${API_URL}/login/${loginModel}`);
     return data;
   },
 

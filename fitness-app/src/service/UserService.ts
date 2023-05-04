@@ -6,8 +6,7 @@ import type {
 import { users } from "@/state/user";
 import axios from "axios";
 import { ref } from "vue";
-
-const API_URL = "https://fitness-app-api-s9v9.onrender.com";
+import { API_URL } from "./AuthService";
 
 // export async function getAllWorkouts(): Promise<User[]> {
 //   const { data } = await axios.get<User[]>(API_URL + "/workouts");
@@ -30,14 +29,14 @@ export async function getUser(id: number): Promise<User[]> {
 }
 
 export async function reloadUsers() {
-  const { data } = await axios.get(`https://fitness-app-api-s9v9.onrender.com/user`);
+  const { data } = await axios.get(`${API_URL}/user`);
   users.value = data;
 }
 
 export async function createUser(
   createUserModel: CreateUserModel
 ): Promise<User> {
-  const { data } = await axios.post<User>(API_URL + "/user", createUserModel);
+  const { data } = await axios.post<User>(`${API_URL}/user/${createUserModel}`);
   return data;
 }
 

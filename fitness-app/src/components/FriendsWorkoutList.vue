@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { API_URL } from "@/service/AuthService";
 import { workouts } from "@/service/MyActivityService";
 import axios from "axios";
 
 async function reloadWorkouts() {
-  const { data } = await axios.get(`https://fitness-app-api-s9v9.onrender.com/workout`);
+  const { data } = await axios.get(`${API_URL}/workout`);
   workouts.value = data;
 }
 

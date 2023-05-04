@@ -1,9 +1,10 @@
+import { API_URL } from "@/service/AuthService";
 import { workouts, workout, newExercise } from "@/state/workout";
 import axios from "axios";
 import { ref } from "vue";
 
 async function getAllWorkoutsByUserId(userId: string) {
-  const { data } = await axios.get(`https://fitness-app-api-s9v9.onrender.com/workout/${userId}`);
+  const { data } = await axios.get(`${API_URL}/workout/${userId}`);
 
   workouts.value = data;
 }
@@ -32,7 +33,7 @@ export function onAddExercise() {
 }
 
 export async function onDeleteWorkout(workoutId: string) {
-  const res = await axios.delete(`https://fitness-app-api-s9v9.onrender.com/workout/${workoutId}`);
+  const res = await axios.delete(`${API_URL}/workout/${workoutId}`);
 
 }
 
