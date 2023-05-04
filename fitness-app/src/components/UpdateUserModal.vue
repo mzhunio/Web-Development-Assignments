@@ -11,7 +11,7 @@ async function onSaveChangesClicked() {
   const { _id, username, email, password, isAdmin } =
     currentUpdatingUser.value as User;
 
-  await axios.patch(`http://localhost:3000/user/${_id}`, {
+  await axios.patch(`https://fitness-app-api-s9v9.onrender.com/user/${_id}`, {
     username,
     email,
     password,

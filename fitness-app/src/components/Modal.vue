@@ -12,7 +12,7 @@ import { user } from "@/state/user";
 import axios from "axios";
 
 async function onSaveChangesClicked() {
-  await axios.post("http://localhost:3000/workout", {
+  await axios.post("https://fitness-app-api-s9v9.onrender.com/workout", {
     ...workout.value,
     userId: user.value!._id,
   });

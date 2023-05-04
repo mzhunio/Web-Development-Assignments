@@ -11,7 +11,7 @@ const password = ref("");
 const isAdmin = ref(false);
 
 async function onSaveChangesClicked() {
-  await axios.post("http://localhost:3000/user", {
+  await axios.post("https://fitness-app-api-s9v9.onrender.com/user", {
     username: username.value,
     email: email.value,
     password: password.value,

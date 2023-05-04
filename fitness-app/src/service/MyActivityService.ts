@@ -27,7 +27,7 @@ export function onAddWorkoutClicked() {
 }
 
 export async function reloadWorkouts(userId: string) {
-  const { data } = await axios.get(`http://localhost:3000/workout/${userId}`);
+  const { data } = await axios.get(`https://fitness-app-api-s9v9.onrender.com/workout/${userId}`);
   workouts.value = data;
 }
 
@@ -48,6 +48,6 @@ export function onDeleteExercise(exerciseIndex: number) {
 }
 
 export async function deleteWorkout(workoutId: string) {
-  await axios.delete(`http://localhost:3000/workout/${workoutId}`);
+  await axios.delete(`https://fitness-app-api-s9v9.onrender.com/workout/${workoutId}`);
   await reloadWorkouts(user.value!._id);
 }

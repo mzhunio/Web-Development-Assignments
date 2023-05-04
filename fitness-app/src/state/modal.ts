@@ -3,7 +3,7 @@ import axios from "axios";
 import { ref } from "vue";
 
 async function getAllWorkoutsByUserId(userId: string) {
-  const { data } = await axios.get(`http://localhost:3000/workout/${userId}`);
+  const { data } = await axios.get(`https://fitness-app-api-s9v9.onrender.com/workout/${userId}`);
 
   workouts.value = data;
 }
@@ -32,7 +32,7 @@ export function onAddExercise() {
 }
 
 export async function onDeleteWorkout(workoutId: string) {
-  const res = await axios.delete(`http://localhost:3000/workout/${workoutId}`);
+  const res = await axios.delete(`https://fitness-app-api-s9v9.onrender.com/workout/${workoutId}`);
 
 }
 

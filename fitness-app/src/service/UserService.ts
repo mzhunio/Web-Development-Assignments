@@ -7,7 +7,7 @@ import { users } from "@/state/user";
 import axios from "axios";
 import { ref } from "vue";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://fitness-app-api-s9v9.onrender.com";
 
 // export async function getAllWorkouts(): Promise<User[]> {
 //   const { data } = await axios.get<User[]>(API_URL + "/workouts");
@@ -30,7 +30,7 @@ export async function getUser(id: number): Promise<User[]> {
 }
 
 export async function reloadUsers() {
-  const { data } = await axios.get(`http://localhost:3000/user`);
+  const { data } = await axios.get(`https://fitness-app-api-s9v9.onrender.com/user`);
   users.value = data;
 }
 

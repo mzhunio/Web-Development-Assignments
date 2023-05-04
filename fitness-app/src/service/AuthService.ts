@@ -5,7 +5,7 @@ import axios from "axios";
 import { LocalStorage } from "./LocalStorageServices";
 import { createUser } from "./UserService";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://fitness-app-api-s9v9.onrender.com";
 
 export enum AuthError {
   InvalidEmail = "Invalid email: Please enter valid email",

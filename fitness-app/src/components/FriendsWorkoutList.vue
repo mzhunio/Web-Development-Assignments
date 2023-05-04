@@ -3,7 +3,7 @@ import { workouts } from "@/service/MyActivityService";
 import axios from "axios";
 
 async function reloadWorkouts() {
-  const { data } = await axios.get(`http://localhost:3000/workout`);
+  const { data } = await axios.get(`https://fitness-app-api-s9v9.onrender.com/workout`);
   workouts.value = data;
 }
 
