@@ -23,7 +23,7 @@ async function onLogout() {
     <div class="container">
       <div class="navbar-brand">
         <router-link class="navbar-item" to="/">
-          <i class="fa-solid fa-fire 2em"></i>
+          <i class="fa-solid fa-fire fa-beat-fade" style="color: #fff0a3;"></i>
         </router-link>
 
         <router-link v-if="isUserLoggedIn" to="/myActivity" class="navbar-item">
