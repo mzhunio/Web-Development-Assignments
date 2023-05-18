@@ -76,6 +76,20 @@ export class UserController {
     }
   }
 
+  async searchUsers(req: Request, res: Response) {
+    const { username } = req.body;
+
+    try {
+      const users = await this.userService.searchUsers(
+        username
+      );
+      res.send(users);
+    } catch (err: any) {
+      const message = err.message ?? `Cannot fetch all users`;
+      res.status(400).send({ message });
+    }
+  }
+
   async deleteUser(req: Request, res: Response) {
     const { id } = req.params;
     await this.userService.getUserById(new ObjectId(id));

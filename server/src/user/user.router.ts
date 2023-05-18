@@ -5,6 +5,7 @@ const userRouter = Router();
 const userController = new UserController();
 
 userRouter.get("/user", userController.getAllUsers.bind(userController));
+userRouter.post("/user/search", userController.searchUsers.bind(userController));
 userRouter.get("/user/:id", userController.getUser.bind(userController));
 userRouter.get(
   "/user/:id/workouts",

@@ -1,23 +1,35 @@
 <script setup lang="ts">
+import type { User } from "@/models/UserModel";
 import { API_URL } from "@/service/AuthService";
 import {
-  closeModal,
-  newExercise,
-  onAddExercise,
-  onDeleteExercise,
-  reloadWorkouts,
-  shouldShowModal,
-  workout,
+closeModal,
+newExercise,
+onAddExercise,
+onDeleteExercise,
+reloadWorkouts,
+shouldShowModal,
+workout,
 } from "@/service/MyActivityService";
-import { user } from "@/state/user";
 import axios from "axios";
+import { ref } from "vue";
+
+
+const user = ref<User | null>(null);
+const users = ref<User[]>([]);
+
+async function searchUsers(username: string) {
+  const { data } = await axios.post(`${API_URL}/user/search`, {
+    username: username,
+  });
+  users.value = data;
+}
 
 async function onSaveChangesClicked() {
   await axios.post(`${API_URL}/workout`, {
     ...workout.value,
     userId: user.value!._id,
   });
-
+  await searchUsers(user.value!.username);
   await reloadWorkouts(user.value!._id);
   closeModal();
 }
@@ -53,6 +65,27 @@ async function onSaveChangesClicked() {
                 placeholder="30"
                 v-model="workout.duration"
               />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="dropdown is-active">
+              <div class="dropdown-trigger">
+                <div class="field">
+                  <label class="label">Tag a Friend</label>
+                  <p class="control is-expanded has-icons-right">
+                    <input
+                      class="input"
+                      type="search"
+                      placeholder="Input Here"
+                      
+                    />
+                    <span class="icon is-small is-right">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 

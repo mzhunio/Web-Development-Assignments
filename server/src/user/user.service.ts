@@ -4,6 +4,8 @@ import { CreateUserModel, UpdateUserModel, UserModel } from "./user.model";
 
 export class UserService {
   collection = database.collection<UserModel>("user");
+  workoutCollection = database.collection("workout");
+
 
   getAllUsers() {
     return this.collection.find().toArray();
@@ -23,6 +25,13 @@ export class UserService {
     user.workouts = this.collection.find({ userId }).toArray();
 
     return user;
+  }
+
+  async searchUsers(username: string) {
+    const users = await this.getAllUsers();
+    return users.find((user) =>
+      user.username.includes(username)
+    );
   }
 
   async createUser({
